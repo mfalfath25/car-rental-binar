@@ -1,10 +1,10 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
-import Main from '../components/Main'
+import Main from './Main'
 import Navbar from '../components/Navbar'
 import Sidenav from '../components/Sidenav'
 
-const DashboardPages = () => {
+const DashboardPage = () => {
   return (
     <div className="Dashboard">
       <Sidebar>
@@ -17,4 +17,4 @@ const DashboardPages = () => {
   )
 }
 
-export default DashboardPages
+export default DashboardPage

@@ -1,20 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap')
+// @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap')
+// @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap')
 
 *
   margin: 0
   padding: 0
   border-box: box-sizing
 
-$blue-1: #0D28A6
-$blue-2: #CFD4ED
-$mono-1: #8A8A8A
-$mono-2: #000000
-$mono-3: #ffffff
-$mono-3-light: rgba(255, 255, 255, 0.3)
+$blue_1: #0D28A6
+$blue_2: #CFD4ED
+$mono_1: #000000
+$mono_2: #8A8A8A
+$mono_3: #ffffff
+$mono_4: rgba(255, 255, 255, 0.3)
+
 
 .App
-  font-family: 'Ubuntu', sans-serif
+  font-family: 'Helvetica', 'Arial', sans-serif
   display: flex
+  width: 100vw
+  height: 100vh
+  overflow: hidden
+
+.Wrapper
+  display: flex
+  flex-direction: column
   width: 100vw
   height: 100vh
   overflow: hidden
@@ -43,34 +52,49 @@ $mono-3-light: rgba(255, 255, 255, 0.3)
   background-size: cover
   position: relative
 
-.Dashboard
-  display: flex
-  height: 100vh
+// .Dashboard
+//   display: flex
+//   height: 100vh
   
-.Sidenav
-  display: flex
-  flex-direction: column
-  width: 80px
-  height: 100%
-  background: $blue-1
-  align-items: center
-  .nav-head
-    background: $blue-2
-    width: 40px
-    height: 40px
-    margin: 1rem 0
+// .Sidenav
+//   display: flex
+//   flex-direction: column
+//   width: 80px
+//   height: 100%
+//   background: $blue_1
+//   align-items: center
+//   z-index: 1
+//   .nav-head
+//     background: $blue_2
+//     width: 40px
+//     height: 40px
+//     margin: 1rem 0
   
-.nav-item
-  width: 100%
-  display: flex
-  flex-direction: column
-  align-items: center
-  padding: 0.8rem 0
-  color: $mono-3
-  font-size: 0.8rem
-  &:hover
-    background: $mono-3-light
-    font-weight: bold
-    cursor: pointer
+// .nav-item
+//   width: 100%
+//   display: flex
+//   flex-direction: column
+//   align-items: center
+//   padding: 0.8rem 0
+//   color: $mono-3
+//   font-size: 0.8rem
+//   &:hover
+//     background: $mono_4
+//     font-weight: bold
+//     cursor: pointer
 
-
+.car-wrap
+  position: relative
+  align-self: flex-end
+  .car-hero
+    position: absolute
+    background-color: $blue_1
+    left: 0
+    bottom: 0
+    height: 60%
+    width: 1000px
+    border-radius: 4rem 0 0 0
+  .car-img
+    position: relative
+    max-width: 100%
+    height: auto

@@ -18,6 +18,7 @@ const LoginForm = () => {
           <Typography variant="h6">Email</Typography>
           <OutlinedInput
             id="email-input"
+            type="email"
             name="email"
             placeholder="Contoh: johndee@gmail.com"
             size="small"
@@ -27,11 +28,11 @@ const LoginForm = () => {
           </Typography>
           <OutlinedInput
             id="pass-input"
+            type="password"
             name="password"
             placeholder="6+ Karakter"
             size="small"
           />
-          <Button />
         </FormControl>
         <Button
           type="submit"

@@ -1,9 +1,9 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
-import LoginBase from '../components/LoginBase'
-import LoginForm from '../components/LoginForm'
+import LoginBase from '../components/Login/LoginBase'
+import LoginForm from '../components/Login/LoginForm'
 
-const LoginPages = () => {
+const LoginPage = () => {
   return (
     <div className="Login">
       <LoginBase />
@@ -11,7 +11,7 @@ const LoginPages = () => {
         <Grid direction="column" alignItems="center" justifyContent="center">
           <Grid item className="header">
             <div className="car-vector"></div>
-            <Typography variant="h4" sx={{ my: 3 }}>
+            <Typography variant="h5" sx={{ my: 3, fontWeight: 'bold' }}>
               Welcome, Admin BCR
             </Typography>
           </Grid>
@@ -24,4 +24,4 @@ const LoginPages = () => {
   )
 }
 
-export default LoginPages
+export default LoginPage

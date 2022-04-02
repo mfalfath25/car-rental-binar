@@ -3,8 +3,9 @@ import { Theme } from './styles/Theme'
 import { ThemeProvider } from '@mui/system'
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 
-import LoginPages from './pages/LoginPages'
-import DashboardPages from './pages/DashboardPages'
+import LoginPage from './pages/LoginPage'
+import MainPage from './pages/MainPage'
+// import TestPage from './pages/TestPage'
 
 function App() {
   return (
@@ -12,8 +13,10 @@ function App() {
       <ThemeProvider theme={Theme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginPages />} />
-            <Route path="/dash" element={<DashboardPages />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/Main" element={<MainPage />} />
+            {/* <Route path="/test" element={<TestPage />} /> */}
+            {/* <Route path="/dash" element={<DashboardPage />} /> */}
             <Route path="/" element={<Navigate to="/login" />} />
             <Route
               path="*"
