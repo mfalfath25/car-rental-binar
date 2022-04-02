@@ -26,7 +26,7 @@ $mono_4: rgba(255, 255, 255, 0.3)
   flex-direction: column
   width: 100vw
   height: 100vh
-  overflow: hidden
+  // overflow: hidden
 
 .Login
   display: flex
@@ -51,6 +51,58 @@ $mono_4: rgba(255, 255, 255, 0.3)
   background-repeat: no-repeat
   background-size: cover
   position: relative
+
+.Logo
+  background-color: #0D28A6
+  padding: 2px
+  width: 100px
+  height: 34px
+
+.car-wrap
+  position: relative
+  align-self: flex-end
+  .car-hero
+    position: absolute
+    background-color: $blue_1
+    left: 0
+    bottom: 0
+    height: 60%
+    width: 1000px
+    border-radius: 4rem 0 0 0
+  .car-img
+    position: relative
+    max-width: 100%
+    height: auto
+
+.Footer
+  position: fixed
+  bottom: 0
+  width: 100%
+  max-width: 1488px
+
+
+.footer-socials
+  position: relative
+  width: 34px
+  height: 34px
+  background: #0D28A6
+  border-radius: 50%
+  text-align: center
+  margin-right: 1rem
+  .footer-icon
+    position: relative
+    top: 15%
+    color: white 
+    fontSize: 1.5em
+
+
+/* UseEffect Styles */
+.test-wrap
+  display: flex
+  justify-content: center
+  flex-direction: row
+  width: 100vw
+  height: 100vh
 
 // .Dashboard
 //   display: flex
@@ -82,19 +134,3 @@ $mono_4: rgba(255, 255, 255, 0.3)
 //     background: $mono_4
 //     font-weight: bold
 //     cursor: pointer
-
-.car-wrap
-  position: relative
-  align-self: flex-end
-  .car-hero
-    position: absolute
-    background-color: $blue_1
-    left: 0
-    bottom: 0
-    height: 60%
-    width: 1000px
-    border-radius: 4rem 0 0 0
-  .car-img
-    position: relative
-    max-width: 100%
-    height: auto

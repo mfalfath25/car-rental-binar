@@ -10,16 +10,7 @@ const Navbar = () => {
         component="div"
         sx={{ display: 'flex', justifyContent: 'space-between', py: '1rem' }}
       >
-        <Box
-          component="span"
-          className="Logo"
-          sx={{
-            backgroundColor: '#0D28A6',
-            p: '2',
-            width: '100px',
-            height: '34px',
-          }}
-        ></Box>
+        <Box className="Logo"></Box>
         <Box
           className="nav-links"
           sx={{ display: 'flex', alignItems: 'center' }}

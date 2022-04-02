@@ -5,7 +5,7 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 
 import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
-// import TestPage from './pages/TestPage'
+import TestPage from './pages/TestPage'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/Main" element={<MainPage />} />
-            {/* <Route path="/test" element={<TestPage />} /> */}
+            <Route path="/test" element={<TestPage />} />
             {/* <Route path="/dash" element={<DashboardPage />} /> */}
             <Route path="/" element={<Navigate to="/login" />} />
             <Route

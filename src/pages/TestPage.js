@@ -1,10 +1,10 @@
 import React from 'react'
-import Comptest from '../components/Comptest'
+import TestUseEffect from '../components/TryHooks/TestUseEffect'
 
 const TestPage = () => {
   return (
     <>
-      <Comptest />
+      <TestUseEffect />
     </>
   )
 }
