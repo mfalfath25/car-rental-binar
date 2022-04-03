@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Content from '../components/Main/Content'
-import Footer from '../components/Main/Footer'
+import Content from '../components/Layout/Content'
+import Footer from '../components/Layout/Footer'
 import Hero from '../components/Main/Hero'
-import Navbar from '../components/Main/Navbar'
+import Navbar from '../components/Layout/Navbar'
 
 const MainPage = () => {
   return (
@@ -12,8 +12,10 @@ const MainPage = () => {
         <Content>
           <Navbar />
           <Hero />
-          <Footer />
         </Content>
+      </Box>
+      <Box className="Footer-wrapper-absolute">
+        <Footer />
       </Box>
     </>
   )

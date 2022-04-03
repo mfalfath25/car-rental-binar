@@ -17,16 +17,13 @@ $mono_4: rgba(255, 255, 255, 0.3)
 .App
   font-family: 'Helvetica', 'Arial', sans-serif
   display: flex
-  width: 100vw
-  height: 100vh
-  overflow: hidden
-
-.Wrapper
-  display: flex
   flex-direction: column
   width: 100vw
   height: 100vh
-  // overflow: hidden
+  overflow-x: hidden
+
+.Wrapper
+  // flex-direction: column
 
 .Login
   display: flex
@@ -74,12 +71,17 @@ $mono_4: rgba(255, 255, 255, 0.3)
     max-width: 100%
     height: auto
 
-.Footer
-  position: fixed
+.Footer-wrapper-absolute
+  position: absolute
   bottom: 0
-  width: 100%
-  max-width: 1488px
+  width:100%
 
+.Footer-wrapper-fluid
+  margin-top: 4rem
+
+.Footer
+  position: relative
+  max-width: 1488px
 
 .footer-socials
   position: relative
