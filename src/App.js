@@ -6,7 +6,8 @@ import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
 import SearchPage from './pages/SearchPage'
-import TestPage from './pages/TestPage'
+import DetailPage from './pages/DetailPage'
+// import TestPage from './pages/TestPage'
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/main/search" element={<SearchPage />} />
-            <Route path="/test" element={<TestPage />} />
+            <Route path="/main/search/detail" element={<DetailPage />} />
+            {/* <Route path="/test" element={<TestPage />} /> */}
             {/* <Route path="/dash" element={<DashboardPage />} /> */}
             <Route path="/" element={<Navigate to="/login" />} />
             <Route
