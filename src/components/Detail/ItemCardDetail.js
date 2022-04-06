@@ -19,13 +19,9 @@ const card = (
           src={require('../../assets/car-card.png')}
           alt="card-img"
         />
-        <Typography variant="body1">Nama/Tipe mobil</Typography>
+
         <Typography sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}>
-          Rp. 430.000 / hari
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 1 }}>
-          lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam quos
-          eius quaerat doloremque.
+          Nama/Tipe mobil
         </Typography>
         <Box
           sx={{
@@ -55,6 +51,21 @@ const card = (
             Tahun 2020
           </Typography>
         </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography variant="body1" sx={{ mb: 1, mt: 4 }}>
+            Total
+          </Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold', mb: 1, mt: 4 }}>
+            Rp. 430.000
+          </Typography>
+        </Box>
       </CardContent>
       <CardActions>
         <Button
@@ -63,7 +74,7 @@ const card = (
           variant="contained"
           sx={{ fontWeight: 'bold', background: '#5CB85F' }}
         >
-          Pilih Mobil
+          Lanjutkan Pembayaran
         </Button>
       </CardActions>
     </Box>

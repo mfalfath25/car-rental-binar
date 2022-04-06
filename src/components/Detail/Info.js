@@ -4,13 +4,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
-  Grid,
-  List,
-  ListItem,
   Typography,
 } from '@mui/material'
 import { FiChevronDown } from 'react-icons/fi'
@@ -82,10 +77,12 @@ const Info = () => {
                 id="panel1a-header"
                 sx={{ p: '0' }}
               >
-                <Typography>Accordion 1</Typography>
+                <Typography sx={{ fontSize: '18px', fontWeight: 'bold' }}>
+                  Refund, Reschedule, Overtime
+                </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Box sx={{ p: '8px', ml: '20px' }}>
+                <Box sx={{ p: '8px', ml: '14px' }}>
                   <ul className="info-list">
                     <li>Tidak termasuk biaya makan sopir Rp 75.000/hari</li>
                     <li>

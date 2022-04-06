@@ -5,6 +5,7 @@ import Navbar from '../components/Layout/Navbar'
 import ItemCard from '../components/Search/ItemCard'
 import Footer from '../components/Layout/Footer'
 import ContentLg from '../components/Layout/ContentLg'
+import SearchFilter from '../components/Layout/SearchFilter'
 
 const SearchPage = () => {
   return (
@@ -12,6 +13,9 @@ const SearchPage = () => {
       <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
         <ContentXl>
           <Navbar />
+          <Box sx={{ transform: 'translateY(25%)' }}>
+            <SearchFilter />
+          </Box>
           <ContentLg>
             <Grid
               container
@@ -28,6 +32,7 @@ const SearchPage = () => {
           </ContentLg>
         </ContentXl>
       </Box>
+
       <Box className="Footer-wrapper-fluid">
         <Footer />
       </Box>

@@ -4,6 +4,7 @@ import ContentXl from '../components/Layout/ContentXl'
 import Navbar from '../components/Layout/Navbar'
 import Hero from '../components/Main/Hero'
 import Footer from '../components/Layout/Footer'
+import SearchFilter from '../components/Layout/SearchFilter'
 
 const MainPage = () => {
   return (
@@ -14,6 +15,7 @@ const MainPage = () => {
           <Hero />
         </ContentXl>
       </Box>
+      <SearchFilter />
       <Box className="Footer-wrapper-absolute">
         <Footer />
       </Box>
