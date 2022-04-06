@@ -1,38 +1,32 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import Content from '../components/Layout/Content'
-import Footer from '../components/Layout/Footer'
+import ContentXl from '../components/Layout/ContentXl'
 import Navbar from '../components/Layout/Navbar'
 import ItemCard from '../components/Search/ItemCard'
+import Footer from '../components/Layout/Footer'
+import ContentLg from '../components/Layout/ContentLg'
 
 const SearchPage = () => {
   return (
     <>
       <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
-        <Content>
+        <ContentXl>
           <Navbar />
-          <Box
-            className="ItemCard"
-            sx={{
-              mx: 'auto',
-              justifyContent: 'center',
-              maxWidth: '1080px',
-              background: '#5CB85F',
-            }}
-          >
+          <ContentLg>
             <Grid
               container
-              justifyContent="space-between"
+              spacing={4}
               sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
+                my: 4,
               }}
             >
               <ItemCard />
+              <ItemCard />
+              <ItemCard />
+              <ItemCard />
             </Grid>
-          </Box>
-        </Content>
+          </ContentLg>
+        </ContentXl>
       </Box>
       <Box className="Footer-wrapper-fluid">
         <Footer />

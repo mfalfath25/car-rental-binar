@@ -1,18 +1,18 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Content from '../components/Layout/Content'
-import Footer from '../components/Layout/Footer'
-import Hero from '../components/Main/Hero'
+import ContentXl from '../components/Layout/ContentXl'
 import Navbar from '../components/Layout/Navbar'
+import Hero from '../components/Main/Hero'
+import Footer from '../components/Layout/Footer'
 
 const MainPage = () => {
   return (
     <>
       <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
-        <Content>
+        <ContentXl>
           <Navbar />
           <Hero />
-        </Content>
+        </ContentXl>
       </Box>
       <Box className="Footer-wrapper-absolute">
         <Footer />

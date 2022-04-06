@@ -70,10 +70,10 @@ const card = (
   </>
 )
 
-const ItemCard = () => {
+const ItemCardDetail = () => {
   return (
     <>
-      <Grid item xs={4}>
+      <Grid item sx={{ mb: '4rem' }}>
         <Card variant="outlined" sx={{ maxWidth: '333px' }}>
           {card}
         </Card>
@@ -82,4 +82,4 @@ const ItemCard = () => {
   )
 }
 
-export default ItemCard
+export default ItemCardDetail

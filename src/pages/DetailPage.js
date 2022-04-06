@@ -1,18 +1,23 @@
-import { Box } from '@mui/material'
 import React from 'react'
-import Info from '../components/Detail/Info'
-import Content from '../components/Layout/Content'
-import Footer from '../components/Layout/Footer'
+import ContentXl from '../components/Layout/ContentXl'
+import ContentLg from '../components/Layout/ContentLg'
 import Navbar from '../components/Layout/Navbar'
+import Info from '../components/Detail/Info'
+import Footer from '../components/Layout/Footer'
+import { Box } from '@mui/material'
+import ItemCardDetail from '../components/Detail/ItemCardDetail'
 
 const DetailPage = () => {
   return (
     <>
       <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
-        <Content>
+        <ContentXl>
           <Navbar />
+        </ContentXl>
+        <ContentLg>
           <Info />
-        </Content>
+          <ItemCardDetail />
+        </ContentLg>
       </Box>
       <Box className="Footer-wrapper-fluid">
         <Footer />

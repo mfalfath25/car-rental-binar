@@ -1,7 +1,7 @@
 import { Container } from '@mui/material'
 import React from 'react'
 
-const Content = ({ children }) => {
+const ContentXl = ({ children }) => {
   return (
     <>
       <Container maxWidth="xl">{children}</Container>
@@ -9,4 +9,4 @@ const Content = ({ children }) => {
   )
 }
 
-export default Content
+export default ContentXl
