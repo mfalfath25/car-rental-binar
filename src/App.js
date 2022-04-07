@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage'
 import MainPage from './pages/MainPage'
 import SearchPage from './pages/SearchPage'
 import DetailPage from './pages/DetailPage'
-// import TestPage from './pages/TestPage'
 
 function App() {
   return (
@@ -18,9 +17,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/main/search" element={<SearchPage />} />
-            <Route path="/main/search/detail" element={<DetailPage />} />
-            {/* <Route path="/test" element={<TestPage />} /> */}
-            {/* <Route path="/dash" element={<DashboardPage />} /> */}
+            <Route path="/main/search/:id" element={<DetailPage />} />
             <Route path="/" element={<Navigate to="/login" />} />
             <Route
               path="*"

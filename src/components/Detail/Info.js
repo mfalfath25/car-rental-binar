@@ -81,8 +81,8 @@ const Info = () => {
                   Refund, Reschedule, Overtime
                 </Typography>
               </AccordionSummary>
-              <AccordionDetails>
-                <Box sx={{ p: '8px', ml: '14px' }}>
+              <AccordionDetails sx={{ p: '0' }}>
+                <Box sx={{ pl: '8px', ml: '14px' }}>
                   <ul className="info-list">
                     <li>Tidak termasuk biaya makan sopir Rp 75.000/hari</li>
                     <li>

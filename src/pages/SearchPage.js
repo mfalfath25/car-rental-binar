@@ -1,5 +1,5 @@
+import React, { useState } from 'react'
 import { Box, Grid } from '@mui/material'
-import React from 'react'
 import ContentXl from '../components/Layout/ContentXl'
 import Navbar from '../components/Layout/Navbar'
 import ItemCard from '../components/Search/ItemCard'
@@ -8,13 +8,14 @@ import ContentLg from '../components/Layout/ContentLg'
 import SearchFilter from '../components/Layout/SearchFilter'
 
 const SearchPage = () => {
+  const [search, setSearch] = useState('')
   return (
     <>
       <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
         <ContentXl>
           <Navbar />
           <Box sx={{ transform: 'translateY(25%)' }}>
-            <SearchFilter />
+            <SearchFilter searchFilter={(data) => setSearch(data)} />
           </Box>
           <ContentLg>
             <Grid
@@ -24,7 +25,7 @@ const SearchPage = () => {
                 my: 4,
               }}
             >
-              <ItemCard />
+              <ItemCard search={search} />
             </Grid>
           </ContentLg>
         </ContentXl>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -9,84 +9,101 @@ import {
   Typography,
 } from '@mui/material'
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi'
-
-const card = (
-  <>
-    <Box sx={{ m: '20px' }}>
-      <CardContent sx={{ p: '8px' }}>
-        <img
-          className="card-img"
-          src={require('../../assets/car-card.png')}
-          alt="card-img"
-        />
-
-        <Typography sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}>
-          Nama/Tipe mobil
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <FiUsers />
-          <Typography variant="body1" sx={{ ml: 1 }}>
-            4 orang
-          </Typography>
-        </Box>
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <FiSettings />
-          <Typography variant="body1" sx={{ ml: 1 }}>
-            Manual
-          </Typography>
-        </Box>
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <FiCalendar />
-          <Typography variant="body1" sx={{ ml: 1 }}>
-            Tahun 2020
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Typography variant="body1" sx={{ mb: 1, mt: 4 }}>
-            Total
-          </Typography>
-          <Typography variant="body1" sx={{ fontWeight: 'bold', mb: 1, mt: 4 }}>
-            Rp. 430.000
-          </Typography>
-        </Box>
-      </CardContent>
-      <CardActions>
-        <Button
-          fullWidth
-          size="large"
-          variant="contained"
-          sx={{ fontWeight: 'bold', background: '#5CB85F' }}
-        >
-          Lanjutkan Pembayaran
-        </Button>
-      </CardActions>
-    </Box>
-  </>
-)
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const ItemCardDetail = () => {
+  const [data, setData] = useState([])
+  const { id } = useParams()
+
+  useEffect(() => {
+    axios
+      .get(`https://rent-cars-api.herokuapp.com/admin/car/${id}`)
+      .then((res) => {
+        console.log(res)
+        setData(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [id])
+
   return (
     <>
       <Grid item sx={{ mb: '4rem' }}>
         <Card variant="outlined" sx={{ maxWidth: '333px' }}>
-          {card}
+          <Box sx={{ m: '20px' }}>
+            <CardContent sx={{ p: '8px' }}>
+              <img className="card-img" src={data.image} alt="card-img" />
+              <Typography sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}>
+                {data.name} / {data.category}
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <FiUsers />
+                <Typography variant="body1" sx={{ ml: 1 }}>
+                  4 orang
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <FiSettings />
+                <Typography variant="body1" sx={{ ml: 1 }}>
+                  Manual
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <FiCalendar />
+                <Typography variant="body1" sx={{ ml: 1 }}>
+                  Tahun 2020
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Typography variant="body1" sx={{ mb: 1, mt: 4 }}>
+                  Total
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 'bold', mb: 1, mt: 4 }}
+                >
+                  Rp. {data.price}
+                </Typography>
+              </Box>
+            </CardContent>
+            <CardActions>
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                sx={{ fontWeight: 'bold', background: '#5CB85F' }}
+              >
+                Lanjutkan Pembayaran
+              </Button>
+            </CardActions>
+          </Box>
         </Card>
       </Grid>
     </>

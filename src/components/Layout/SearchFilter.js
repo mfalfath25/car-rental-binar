@@ -15,21 +15,33 @@ import {
 import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { FiUsers } from 'react-icons/fi'
+import { useNavigate, useLocation } from 'react-router-dom'
 
-const SearchFilter = () => {
-  const [tipeDriver, setTipeDriver] = useState('')
+const SearchFilter = (props) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [tipeMobil, setTipeMobil] = useState('')
   const [date, setDate] = useState(new Date('2014-08-18T21:11:54'))
   const [waktuJemput, setWaktuJemput] = useState('')
+
+  const handleTipeMobil = (value) => {
+    setTipeMobil(value)
+    console.log(value)
+  }
 
   const handleDatePicker = (newValue) => {
     setDate(newValue)
   }
-  const handleTipeDriver = (event) => {
-    setTipeDriver(event.target.value)
-  }
 
   const handleWaktuJemput = (event) => {
     setWaktuJemput(event.target.value)
+  }
+
+  const getSearchPage = () => {
+    const path = `search`
+    const verifyPath = '/main/search'
+    // eslint-disable-next-line no-unused-vars
+    const checkPath = location.pathname !== verifyPath ? navigate(path) : ''
   }
   return (
     <>
@@ -40,19 +52,18 @@ const SearchFilter = () => {
           flexDirection: 'row',
           justifyContent: 'center',
           flexGrow: 1,
-          transform: 'translateY(-20%)',
         }}
       >
         <Paper elevation={3} sx={{ p: 4, width: '1100px', height: '70px' }}>
           <Grid container spacing={2} columns={{ sm: 9 }}>
             <Grid item xs={2}>
               <Box>
-                <Typography>Tipe Driver</Typography>
+                <Typography>Tipe Mobil</Typography>
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
                     <Select
-                      value={tipeDriver}
-                      onChange={handleTipeDriver}
+                      value={tipeMobil}
+                      onChange={(e) => handleTipeMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
@@ -60,10 +71,10 @@ const SearchFilter = () => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={'Dengan Sopir'}>Dengan Sopir</MenuItem>
-                      <MenuItem value={'Tanpa Sopir'}>
-                        Tanpa Sopir (lepas kunci)
-                      </MenuItem>
+                      <MenuItem value={'APV'}>APV</MenuItem>
+                      <MenuItem value={'Xenia'}>Xenia</MenuItem>
+                      <MenuItem value={'Avanza'}>Avanza</MenuItem>
+                      <MenuItem value={'Alphard'}>Alphard</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -130,6 +141,10 @@ const SearchFilter = () => {
               <Button
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
+                onClick={() => {
+                  props.searchFilter(tipeMobil)
+                  getSearchPage()
+                }}
               >
                 Cari Mobil
               </Button>
