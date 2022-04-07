@@ -25,9 +25,6 @@ const SearchPage = () => {
               }}
             >
               <ItemCard />
-              <ItemCard />
-              <ItemCard />
-              <ItemCard />
             </Grid>
           </ContentLg>
         </ContentXl>

@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FormControl, OutlinedInput, Button, Typography } from '@mui/material'
+import axios from 'axios'
 
 const LoginForm = () => {
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleChange = (e) => {
+    const value = e.target.value
+    setData({
+      ...data,
+      [e.target.name]: value,
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
@@ -9,6 +23,16 @@ const LoginForm = () => {
       email: data.get('email'),
       password: data.get('password'),
     })
+    axios
+      .post('https://rent-cars-api.herokuapp.com/admin/auth/login', data)
+      .then((response) => {
+        console.log(response.status)
+        console.log(response.data.token)
+        if (response.status === 201) {
+          localStorage.setItem('token', response.data.token)
+          window.location.href = '/main'
+        }
+      })
   }
 
   return (
@@ -22,6 +46,7 @@ const LoginForm = () => {
             name="email"
             placeholder="Contoh: johndee@gmail.com"
             size="small"
+            onChange={handleChange}
           />
           <Typography variant="h6" sx={{ mt: 2 }}>
             Password
@@ -32,6 +57,7 @@ const LoginForm = () => {
             name="password"
             placeholder="6+ Karakter"
             size="small"
+            onChange={handleChange}
           />
         </FormControl>
         <Button

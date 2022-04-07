@@ -16,7 +16,7 @@ const MainPage = () => {
         </ContentXl>
       </Box>
       <SearchFilter />
-      <Box className="Footer-wrapper-absolute">
+      <Box className="Footer-wrapper-fluid">
         <Footer />
       </Box>
     </>

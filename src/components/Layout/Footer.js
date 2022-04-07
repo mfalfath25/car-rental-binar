@@ -15,8 +15,8 @@ const Footer = () => {
     <>
       <Container maxWidth="xl">
         <Box className="Footer">
-          <Grid container spacing={3} justifyContent="space-evenly">
-            <Grid item xs={3}>
+          <Grid container spacing={4} justifyContent="space-evenly">
+            <Grid item xs={12} md={6} lg={3}>
               <Typography variant="body1" sx={{ mb: '1rem' }}>
                 Jalan Suroyo No. 161 Mayangan Kota Probolonggo 672000
               </Typography>
@@ -25,7 +25,7 @@ const Footer = () => {
               </Typography>
               <Typography variant="body1">081-233-334-8080</Typography>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               {pages.map((page) => (
                 <Link key={page} underline="none" href={'/' + page}>
                   <Typography
@@ -41,7 +41,7 @@ const Footer = () => {
                 </Link>
               ))}
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Typography variant="body1" sx={{ mb: '1rem' }}>
                 Connect with us
               </Typography>
@@ -63,7 +63,7 @@ const Footer = () => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={6} lg={3}>
               <Typography variant="body1" sx={{ mb: '1rem' }}>
                 Copyright Binar 2022
               </Typography>
