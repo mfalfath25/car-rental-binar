@@ -15,18 +15,22 @@ import { useParams } from 'react-router-dom'
 const ItemCardDetail = () => {
   const [data, setData] = useState([])
   const { id } = useParams()
+  const baseUrl = `https://rent-cars-api.herokuapp.com/admin/car/${id}`
 
   useEffect(() => {
-    axios
-      .get(`https://rent-cars-api.herokuapp.com/admin/car/${id}`)
-      .then((res) => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}`, {}).then((res) => {
         console.log(res)
         setData(res.data)
       })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [id])
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <>

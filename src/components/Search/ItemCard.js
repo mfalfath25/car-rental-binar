@@ -10,25 +10,32 @@ import {
 } from '@mui/material'
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const ItemCard = (props) => {
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car'
 
   useEffect(() => {
-    getCar()
+    getData()
   }, [])
 
-  const getCar = () => {
-    axios.get(`${baseUrl}`, {}).then((res) => {
-      console.log(res.data)
-      setData(res.data)
-    })
+  const getData = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}`, {}).then((res) => {
+        console.log(res)
+        setData(res.data)
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleCard = (id) => {
-    console.log(id)
-    window.location.href = `/main/search/${id}`
+    const path = `detail/${id}`
+    navigate(path)
+    // window.location.href = `/main/search/${id}`
   }
 
   // const getFilteredCar = () => {
@@ -41,17 +48,6 @@ const ItemCard = (props) => {
   //     setData(filteredData)
   //   } else {
   //     setData(res.data)
-  //   }
-  // }
-
-  // const getCar = async () => {
-  //   try {
-  //     const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-  //       console.log(res.data)
-  //       setData(res.data)
-  //     })
-  //   } catch (error) {
-  //     console.error(error)
   //   }
   // }
 

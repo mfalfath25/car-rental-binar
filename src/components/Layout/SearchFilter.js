@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { FiUsers } from 'react-icons/fi'
 import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
 
 const SearchFilter = (props) => {
   const navigate = useNavigate()
@@ -23,6 +24,22 @@ const SearchFilter = (props) => {
   const [tipeMobil, setTipeMobil] = useState('')
   const [date, setDate] = useState(new Date('2014-08-18T21:11:54'))
   const [waktuJemput, setWaktuJemput] = useState('')
+  const [data, setData] = useState([])
+  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car'
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}`, {}).then((res) => {
+        setData(res.data)
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const handleTipeMobil = (value) => {
     setTipeMobil(value)
@@ -71,10 +88,11 @@ const SearchFilter = (props) => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={'APV'}>APV</MenuItem>
-                      <MenuItem value={'Xenia'}>Xenia</MenuItem>
-                      <MenuItem value={'Avanza'}>Avanza</MenuItem>
-                      <MenuItem value={'Alphard'}>Alphard</MenuItem>
+                      {data.map((item) => (
+                        <MenuItem value={item.name} key={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Box>
