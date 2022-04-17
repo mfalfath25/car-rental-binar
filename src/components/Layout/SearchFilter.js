@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -11,55 +11,55 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material'
-import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import { FiUsers } from 'react-icons/fi'
-import { useNavigate, useLocation } from 'react-router-dom'
-import axios from 'axios'
+} from '@mui/material';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { FiUsers } from 'react-icons/fi';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const SearchFilter = (props) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [tipeMobil, setTipeMobil] = useState('')
-  const [date, setDate] = useState(new Date('2014-08-18T21:11:54'))
-  const [waktuJemput, setWaktuJemput] = useState('')
-  const [data, setData] = useState([])
-  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car'
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [tipeMobil, setTipeMobil] = useState('');
+  const [date, setDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [waktuJemput, setWaktuJemput] = useState('');
+  const [data, setData] = useState([]);
+  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car';
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const getData = async () => {
     try {
       const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        setData(res.data)
-      })
+        setData(res.data);
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleTipeMobil = (value) => {
-    setTipeMobil(value)
-    console.log(value)
-  }
+    setTipeMobil(value);
+    console.log(value);
+  };
 
   const handleDatePicker = (newValue) => {
-    setDate(newValue)
-  }
+    setDate(newValue);
+  };
 
   const handleWaktuJemput = (event) => {
-    setWaktuJemput(event.target.value)
-  }
+    setWaktuJemput(event.target.value);
+  };
 
   const getSearchPage = () => {
-    const path = `search`
-    const verifyPath = '/main/search'
+    const path = `search`;
+    const verifyPath = '/main/search';
     // eslint-disable-next-line no-unused-vars
-    const checkPath = location.pathname !== verifyPath ? navigate(path) : ''
-  }
+    const checkPath = location.pathname !== verifyPath ? navigate(path) : '';
+  };
   return (
     <>
       <Box
@@ -79,6 +79,7 @@ const SearchFilter = (props) => {
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
                     <Select
+                      disabled={props.disabled}
                       value={tipeMobil}
                       onChange={(e) => handleTipeMobil(e.target.value)}
                       displayEmpty
@@ -101,16 +102,21 @@ const SearchFilter = (props) => {
             <Grid item xs={2}>
               <Box>
                 <Typography>Tanggal</Typography>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    inputFormat="MM/dd/yyyy"
-                    value={date}
-                    onChange={handleDatePicker}
-                    renderInput={(params) => (
-                      <TextField size="small" {...params} />
-                    )}
-                  />
-                </LocalizationProvider>
+                <Box sx={{ width: '210px' }}>
+                  <FormControl fullWidth>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                      <DesktopDatePicker
+                        disabled={props.disabled}
+                        inputFormat="mm/dd/yyyy"
+                        value={date}
+                        onChange={handleDatePicker}
+                        renderInput={(params) => (
+                          <TextField size="small" {...params} />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </FormControl>
+                </Box>
               </Box>
             </Grid>
             <Grid item xs={2}>
@@ -119,6 +125,7 @@ const SearchFilter = (props) => {
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
                     <Select
+                      disabled={props.disabled}
                       value={waktuJemput}
                       onChange={handleWaktuJemput}
                       displayEmpty
@@ -141,27 +148,33 @@ const SearchFilter = (props) => {
             <Grid item xs={2}>
               <Box>
                 <Typography>Jumlah Penumpang (optional)</Typography>
-                <OutlinedInput
-                  id="jumlah-penumpang"
-                  type="text"
-                  name="jumlah-penumpang"
-                  placeholder="Jumlah Penumpang"
-                  size="small"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <FiUsers />
-                    </InputAdornment>
-                  }
-                />
+                <Box sx={{ width: '210px' }}>
+                  <FormControl fullWidth>
+                    <OutlinedInput
+                      disabled={props.disabled}
+                      id="jumlah-penumpang"
+                      type="text"
+                      name="jumlah-penumpang"
+                      placeholder="Jumlah Penumpang"
+                      size="small"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <FiUsers />
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                </Box>
               </Box>
             </Grid>
             <Grid item xs={1} sx={{ mt: 'auto', mb: '0.25rem' }}>
               <Button
+                disabled={props.disabled}
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
                 onClick={() => {
-                  props.searchFilter(tipeMobil)
-                  getSearchPage()
+                  props.searchFilter(tipeMobil);
+                  getSearchPage();
                 }}
               >
                 Cari Mobil
@@ -171,7 +184,7 @@ const SearchFilter = (props) => {
         </Paper>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default SearchFilter
+export default SearchFilter;

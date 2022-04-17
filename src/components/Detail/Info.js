@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -7,8 +7,8 @@ import {
   Card,
   CardContent,
   Typography,
-} from '@mui/material'
-import { FiChevronDown } from 'react-icons/fi'
+} from '@mui/material';
+import { FiChevronDown } from 'react-icons/fi';
 
 const Info = () => {
   return (
@@ -16,7 +16,7 @@ const Info = () => {
       <Card
         variant="outlined"
         sx={{
-          width: '605px',
+          minWidth: '780px',
           borderRadius: '8px',
         }}
       >
@@ -110,7 +110,7 @@ const Info = () => {
         </Box>
       </Card>
     </>
-  )
-}
+  );
+};
 
-export default Info
+export default Info;

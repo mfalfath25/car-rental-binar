@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
-import { Box, Grid } from '@mui/material'
-import ContentXl from '../components/Layout/ContentXl'
-import Navbar from '../components/Layout/Navbar'
-import ItemCard from '../components/Search/ItemCard'
-import Footer from '../components/Layout/Footer'
-import ContentLg from '../components/Layout/ContentLg'
-import SearchFilter from '../components/Layout/SearchFilter'
+import React, { useState } from 'react';
+import { Box, Grid } from '@mui/material';
+import ContentXl from '../components/Layout/ContentXl';
+import Navbar from '../components/Layout/Navbar';
+import ItemCard from '../components/Search/ItemCard';
+import Footer from '../components/Layout/Footer';
+import ContentLg from '../components/Layout/ContentLg';
+import SearchFilter from '../components/Layout/SearchFilter';
 
 const SearchPage = () => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
   return (
     <>
-      <Box className="Wrapper" sx={{ background: '#F1F3FF' }}>
-        <ContentXl>
-          <Navbar />
-          <Box sx={{ transform: 'translateY(25%)' }}>
-            <SearchFilter searchFilter={(data) => setSearch(data)} />
-          </Box>
+      <Box className="Wrapper">
+        <Box sx={{ background: '#F1F3FF' }}>
+          <ContentXl>
+            <Navbar />
+            <Box sx={{ transform: 'translateY(45%)' }}>
+              <SearchFilter searchFilter={(data) => setSearch(data)} />
+            </Box>
+          </ContentXl>
+        </Box>
+        <Box sx={{ background: '#FFFFFF', pt: 5 }}>
           <ContentLg>
             <Grid
               container
@@ -28,15 +32,14 @@ const SearchPage = () => {
               <ItemCard search={search} />
             </Grid>
           </ContentLg>
-        </ContentXl>
+        </Box>
       </Box>
 
-      <Box className="Footer-wrapper-fluid">
+      <Box className="Footer-wrapper-fluid" sx={{ background: '#FFFFFF' }}>
         <Footer />
       </Box>
-      {/* <Box className="Wrapper" sx={{ background: '#FFFFFF' }}></Box> */}
     </>
-  )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;

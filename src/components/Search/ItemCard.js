@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -7,36 +7,35 @@ import {
   CardContent,
   Grid,
   Typography,
-} from '@mui/material'
-import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+} from '@mui/material';
+import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ItemCard = (props) => {
-  const navigate = useNavigate()
-  const [data, setData] = useState([])
-  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car'
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car';
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const getData = async () => {
     try {
       const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        console.log(res)
-        setData(res.data)
-      })
+        console.log(res);
+        setData(res.data);
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleCard = (id) => {
-    const path = `detail/${id}`
-    navigate(path)
-    // window.location.href = `/main/search/${id}`
-  }
+    const path = `detail/${id}`;
+    navigate(path);
+  };
 
   // const getFilteredCar = () => {
   //   if (props.search) {
@@ -128,7 +127,7 @@ const ItemCard = (props) => {
           </Grid>
         ))}
     </>
-  )
-}
+  );
+};
 
-export default ItemCard
+export default ItemCard;

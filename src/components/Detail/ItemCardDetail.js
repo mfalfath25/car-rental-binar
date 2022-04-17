@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -7,30 +7,30 @@ import {
   CardContent,
   Grid,
   Typography,
-} from '@mui/material'
-import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
+} from '@mui/material';
+import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ItemCardDetail = () => {
-  const [data, setData] = useState([])
-  const { id } = useParams()
-  const baseUrl = `https://rent-cars-api.herokuapp.com/admin/car/${id}`
+  const [data, setData] = useState([]);
+  const { id } = useParams();
+  const baseUrl = `https://rent-cars-api.herokuapp.com/admin/car/${id}`;
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  });
 
   const getData = async () => {
     try {
       const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        console.log(res)
-        setData(res.data)
-      })
+        console.log(res);
+        setData(res.data);
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
     <>
@@ -111,7 +111,7 @@ const ItemCardDetail = () => {
         </Card>
       </Grid>
     </>
-  )
-}
+  );
+};
 
-export default ItemCardDetail
+export default ItemCardDetail;
