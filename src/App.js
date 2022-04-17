@@ -1,12 +1,13 @@
-import './styles/App.sass'
-import { Theme } from './styles/Theme'
-import { ThemeProvider } from '@mui/system'
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
+import './styles/App.sass';
+import { Theme } from './styles/Theme';
+import { ThemeProvider } from '@mui/system';
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 
-import LoginPage from './pages/LoginPage'
-import MainPage from './pages/MainPage'
-import SearchPage from './pages/SearchPage'
-import DetailPage from './pages/DetailPage'
+import LoginPage from './pages/LoginPage';
+import MainPage from './pages/MainPage';
+import SearchPage from './pages/SearchPage';
+import DetailPage from './pages/DetailPage';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             <Route path="/main/search" element={<SearchPage />} />
             <Route path="/main/search/detail/:id" element={<DetailPage />} />
+            <Route path="/main/pembayaran/:id" element={<PaymentPage />} />
             <Route path="/" element={<Navigate to="/login" />} />
             <Route
               path="*"
@@ -32,7 +34,7 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
