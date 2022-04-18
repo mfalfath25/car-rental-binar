@@ -11,20 +11,28 @@ import {
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setButton } from '../../redux/actions/itemActions';
 
 const ItemCard = (props) => {
+  const bt = useSelector((state) => state.buttonText.buttonText);
+  const dispatch = useDispatch();
+
+  console.log(bt);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car';
+  // const baseUrl = 'https://625d14fe4c36c753576e928d.mockapi.io/item';
 
   useEffect(() => {
     getData();
+    dispatch(setButton('Pilih Mobil'));
   }, []);
 
   const getData = async () => {
     try {
       const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        console.log(res);
+        // console.log(res);
         setData(res.data);
       });
     } catch (error) {
@@ -67,7 +75,7 @@ const ItemCard = (props) => {
                   <Typography
                     sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}
                   >
-                    Rp. {item.price} / hari
+                    Rp. {Number(item.price).toLocaleString()} / hari
                   </Typography>
                   <Typography variant="body1" sx={{ mb: 1 }}>
                     lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -119,7 +127,7 @@ const ItemCard = (props) => {
                     sx={{ fontWeight: 'bold', background: '#5CB85F' }}
                     onClick={() => handleCard(item.id)}
                   >
-                    Pilih Mobil
+                    {bt}
                   </Button>
                 </CardActions>
               </Box>

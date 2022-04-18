@@ -11,14 +11,20 @@ import {
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setButton } from '../../redux/actions/itemActions';
 
 const ItemCardDetail = () => {
+  const bt = useSelector((state) => state.buttonText.buttonText);
+  const dispatch = useDispatch();
+
   const [data, setData] = useState([]);
   const { id } = useParams();
   const baseUrl = `https://rent-cars-api.herokuapp.com/admin/car/${id}`;
 
   useEffect(() => {
     getData();
+    dispatch(setButton('Lanjutkan pembayaran'));
   });
 
   const getData = async () => {
@@ -93,7 +99,7 @@ const ItemCardDetail = () => {
                   variant="body1"
                   sx={{ fontWeight: 'bold', mb: 1, mt: 4 }}
                 >
-                  Rp. {data.price}
+                  Rp. {Number(data.price).toLocaleString()}
                 </Typography>
               </Box>
             </CardContent>
@@ -104,7 +110,7 @@ const ItemCardDetail = () => {
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
               >
-                Lanjutkan Pembayaran
+                {bt}
               </Button>
             </CardActions>
           </Box>

@@ -108,7 +108,7 @@ const PaymentDetail = () => {
                   <Typography
                     sx={{ fontSize: '16px', fontWeight: 'bold', ml: 'auto' }}
                   >
-                    Rp. 1.000.000
+                    Rp. {Number(1000000).toLocaleString()}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ p: '0' }}>
@@ -125,7 +125,7 @@ const PaymentDetail = () => {
                             ml: 'auto',
                           }}
                         >
-                          Rp. 1.000.000
+                          Rp. {Number(1000000).toLocaleString()}
                         </Typography>
                       </Stack>
                     </ul>
@@ -193,7 +193,7 @@ const PaymentDetail = () => {
                         ml: 'auto',
                       }}
                     >
-                      Rp. 1.000.000
+                      Rp. {Number(1000000).toLocaleString()}
                     </Typography>
                   </Stack>
                 </AccordionDetails>
