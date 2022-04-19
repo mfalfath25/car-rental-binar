@@ -1,139 +1,140 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
+  CircularProgress,
   Grid,
   Typography,
 } from '@mui/material';
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setButton } from '../../redux/actions/itemActions';
+import { setButton, fetchItems } from '../../redux/actions/itemActions';
 
 const ItemCard = (props) => {
   const bt = useSelector((state) => state.buttonText.buttonText);
+  const data = useSelector((state) => state.items.items);
   const dispatch = useDispatch();
-
-  console.log(bt);
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car';
-  // const baseUrl = 'https://625d14fe4c36c753576e928d.mockapi.io/item';
 
   useEffect(() => {
-    getData();
     dispatch(setButton('Pilih Mobil'));
-  }, []);
-
-  const getData = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        // console.log(res);
-        setData(res.data);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    dispatch(fetchItems());
+  });
 
   const handleCard = (id) => {
     const path = `detail/${id}`;
     navigate(path);
   };
 
-  // const getFilteredCar = () => {
-  //   if (props.search) {
-  //     const filteredData = data.filter((item) => {
-  //       return Object.keys(item).some((key) =>
-  //         item[key].toLowerCase().includes(props.search.toLowerCase())
-  //       )
-  //     })
-  //     setData(filteredData)
-  //   } else {
-  //     setData(res.data)
-  //   }
-  // }
+  const dateFormat = (time) => {
+    const date = new Date(time);
+    const options = {
+      year: 'numeric',
+    };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   return (
     <>
-      {data
-        .filter((item) => item.name.includes(props.search))
-        .map((item) => (
-          <Grid item xs={4} key={item.id}>
-            <Card variant="outlined" sx={{ maxWidth: '333px' }}>
-              <Box sx={{ m: '20px' }}>
-                <CardContent sx={{ p: '8px' }}>
-                  <img className="card-img" src={item.image} alt="card-img" />
-                  <Typography variant="body1">
-                    {item.name} / {item.category}
-                  </Typography>
+      {typeof data !== 'undefined' ? (
+        data
+          ?.filter((item) => item.name.includes(props.search))
+          .map((item) => (
+            <Grid item xs={4} key={item.id}>
+              <Card
+                variant="outlined"
+                sx={{
+                  display: 'flex',
+                  height: '100%',
+                  maxWidth: '333px',
+                }}
+              >
+                <Box
+                  sx={{
+                    m: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <CardContent sx={{ p: '8px' }}>
+                    <img className="card-img" src={item.image} alt="card-img" />
+                    <Typography variant="body1">
+                      {item.name} / {item.type}
+                    </Typography>
 
-                  <Typography
-                    sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}
-                  >
-                    Rp. {Number(item.price).toLocaleString()} / hari
-                  </Typography>
-                  <Typography variant="body1" sx={{ mb: 1 }}>
-                    lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam quos eius quaerat doloremque.
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FiUsers />
-                    <Typography variant="body1" sx={{ ml: 1 }}>
-                      4 orang
+                    <Typography
+                      sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}
+                    >
+                      Rp. {Number(item.price).toLocaleString()} / hari
                     </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FiSettings />
-                    <Typography variant="body1" sx={{ ml: 1 }}>
-                      Manual
+                    <Typography variant="body1" sx={{ mb: 1 }}>
+                      {item.description}
                     </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <FiCalendar />
-                    <Typography variant="body1" sx={{ ml: 1 }}>
-                      Tahun 2022
-                      {/* {item.start_rent_at} - {item.finish_rent_at} */}
-                    </Typography>
-                  </Box>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    sx={{ fontWeight: 'bold', background: '#5CB85F' }}
-                    onClick={() => handleCard(item.id)}
-                  >
-                    {bt}
-                  </Button>
-                </CardActions>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FiUsers />
+                      <Typography variant="body1" sx={{ ml: 1 }}>
+                        {item.passenger} orang
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FiSettings />
+                      <Typography variant="body1" sx={{ ml: 1 }}>
+                        {item.model}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <FiCalendar />
+                      <Typography variant="body1" sx={{ ml: 1 }}>
+                        Tahun {dateFormat(item.time)}
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                  <CardActions sx={{ mt: 'auto' }}>
+                    <Button
+                      fullWidth
+                      size="large"
+                      variant="contained"
+                      sx={{
+                        fontWeight: 'bold',
+                        background: '#5CB85F',
+                      }}
+                      onClick={() => handleCard(item.id)}
+                    >
+                      {bt}
+                    </Button>
+                  </CardActions>
+                </Box>
+              </Card>
+            </Grid>
+          ))
+      ) : (
+        <Box sx={{ display: 'flex', mx: 'auto' }}>
+          <CircularProgress />
+        </Box>
+      )}
     </>
   );
 };

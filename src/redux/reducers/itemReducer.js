@@ -12,6 +12,11 @@ export const itemReducer = (state = initialState.items, action) => {
         ...state,
         items: action.payload,
       };
+    case ActionTypes.FETCH_ITEMS:
+      return {
+        ...state,
+        items: action.payload,
+      };
     default:
       return state;
   }

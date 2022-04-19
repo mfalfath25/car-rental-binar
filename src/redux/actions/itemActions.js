@@ -1,11 +1,22 @@
-import axios from 'axios';
+import customApi from '../../apis/api';
 import { ActionTypes } from '../constants';
 
-// export const fetchItem = () => ({
-//   const response = await axios.get(/)
-// });
+export const fetchItems = () => {
+  return async (dispatch) => {
+    try {
+      const response = await customApi.get('/item');
+      // console.log(response);
+      dispatch({
+        type: ActionTypes.FETCH_ITEMS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
-export const setItem = (items) => {
+export const setItems = (items) => {
   return {
     type: ActionTypes.SET_ITEMS,
     payload: items,
