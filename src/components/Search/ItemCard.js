@@ -13,6 +13,7 @@ import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setButton, fetchItems } from '../../redux/actions/itemActions';
+import { getYear } from '../../utils/getYear';
 
 const ItemCard = (props) => {
   const bt = useSelector((state) => state.buttonText.buttonText);
@@ -29,14 +30,6 @@ const ItemCard = (props) => {
   const handleCard = (id) => {
     const path = `detail/${id}`;
     navigate(path);
-  };
-
-  const dateFormat = (time) => {
-    const date = new Date(time);
-    const options = {
-      year: 'numeric',
-    };
-    return date.toLocaleDateString('en-US', options);
   };
 
   return (
@@ -109,7 +102,7 @@ const ItemCard = (props) => {
                     >
                       <FiCalendar />
                       <Typography variant="body1" sx={{ ml: 1 }}>
-                        Tahun {dateFormat(item.time)}
+                        Tahun {getYear(item.time)}
                       </Typography>
                     </Box>
                   </CardContent>

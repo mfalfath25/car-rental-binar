@@ -12,6 +12,7 @@ import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItem, setButton } from '../../redux/actions/itemActions';
+import { getYear } from '../../utils/getYear';
 
 const ItemCardDetail = () => {
   const bt = useSelector((state) => state.buttonText.buttonText);
@@ -67,7 +68,7 @@ const ItemCardDetail = () => {
               >
                 <FiCalendar />
                 <Typography variant="body1" sx={{ ml: 1 }}>
-                  Tahun {data.time}
+                  Tahun {getYear(data.time)}
                 </Typography>
               </Box>
               <Box
