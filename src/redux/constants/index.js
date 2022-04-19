@@ -1,6 +1,5 @@
 export const ActionTypes = {
   FETCH_ITEMS: 'FECTH_ITEMS',
-  SET_ITEMS: 'SET_ITEMS',
   SELECTED_ITEM: 'SELECTED_ITEM',
   SET_BUTTON: 'SET_BUTTON',
 };

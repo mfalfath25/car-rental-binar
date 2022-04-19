@@ -16,17 +16,18 @@ export const fetchItems = () => {
   };
 };
 
-export const setItems = (items) => {
-  return {
-    type: ActionTypes.SET_ITEMS,
-    payload: items,
-  };
-};
-
-export const selectedItem = (item) => {
-  return {
-    type: ActionTypes.SELECTED_ITEM,
-    payload: item,
+export const fetchItem = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await customApi.get(`/item/${id}`);
+      // console.log(response);
+      dispatch({
+        type: ActionTypes.SELECTED_ITEM,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 };
 

@@ -17,6 +17,7 @@ import { setButton, fetchItems } from '../../redux/actions/itemActions';
 const ItemCard = (props) => {
   const bt = useSelector((state) => state.buttonText.buttonText);
   const data = useSelector((state) => state.items.items);
+  // console.log(data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

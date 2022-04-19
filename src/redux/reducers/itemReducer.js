@@ -7,11 +7,6 @@ const initialState = {
 
 export const itemReducer = (state = initialState.items, action) => {
   switch (action.type) {
-    case ActionTypes.SET_ITEMS:
-      return {
-        ...state,
-        items: action.payload,
-      };
     case ActionTypes.FETCH_ITEMS:
       return {
         ...state,
