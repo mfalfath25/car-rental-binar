@@ -9,6 +9,15 @@ import SearchFilter from '../components/Layout/SearchFilter';
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
+  const searchs = {
+    tipeMobil: '',
+    ukuranMobil: '',
+    tahunMobil: '',
+    jumlahPenumpang: '',
+  };
+
+  console.log('filtering langsung', search);
+
   return (
     <>
       <Box className="Wrapper">
@@ -29,7 +38,7 @@ const SearchPage = () => {
                 my: 4,
               }}
             >
-              <ItemCard search={search} />
+              <ItemCard search={search === '' ? searchs : search} />
             </Grid>
           </ContentLg>
         </Box>

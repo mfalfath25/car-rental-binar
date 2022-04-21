@@ -2,6 +2,7 @@ import { ActionTypes } from '../constants';
 
 const initialState = {
   items: [],
+  cars: [],
   buttonText: '',
 };
 
@@ -20,6 +21,30 @@ export const itemReducer = (state = initialState.items, action) => {
 export const selectedItemReducer = (state = {}, action) => {
   switch (action.type) {
     case ActionTypes.SELECTED_ITEM:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const carReducer = (state = initialState.cars, action) => {
+  switch (action.type) {
+    case ActionTypes.FETCH_CARS:
+      return {
+        ...state,
+        cars: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const selectedCarReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ActionTypes.SELECTED_CAR:
       return {
         ...state,
         ...action.payload,

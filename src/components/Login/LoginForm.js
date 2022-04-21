@@ -15,7 +15,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const timer = useRef();
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [user, setUser] = useState();
   const [message, setMessage] = useState({
     info: '',
@@ -53,13 +52,13 @@ const LoginForm = () => {
         .then((res) => {
           if (res.status === 201) {
             setUser({ id: '1', role: 'admin' });
-            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('user', JSON.stringify(user.role));
             if (!loading) {
-              setSuccess(false);
               setLoading(true);
-              setMessage({ info: 'Login Successful', type: 'success' });
               timer.current = setTimeout(() => {
-                setSuccess(true);
+                setMessage({ info: 'Login Successful', type: 'success' });
+              }, 1000);
+              timer.current = setTimeout(() => {
                 setLoading(false);
                 navigate('/main');
               }, 2000);
@@ -69,10 +68,8 @@ const LoginForm = () => {
     } catch (error) {
       if (error.response.status === 400) {
         if (!loading) {
-          setSuccess(false);
           setLoading(true);
           timer.current = setTimeout(() => {
-            setSuccess(true);
             setLoading(false);
             setMessage({
               info: 'Invalid credentials: Wrong Password',
@@ -82,10 +79,8 @@ const LoginForm = () => {
         }
       } else if (error.response.status === 404) {
         if (!loading) {
-          setSuccess(false);
           setLoading(true);
           timer.current = setTimeout(() => {
-            setSuccess(true);
             setLoading(false);
             setMessage({
               info: 'Invalid credentials: Email Not Found',
@@ -99,7 +94,7 @@ const LoginForm = () => {
 
   return (
     <div className="LoginForm">
-      {message ? (
+      {message.type ? (
         <Alert severity={message.type} sx={{ mb: 2 }}>
           {message.info}
         </Alert>
@@ -136,7 +131,11 @@ const LoginForm = () => {
             fullWidth
             variant="contained"
             disabled={loading}
-            sx={{ mt: 3, py: 1 }}
+            sx={{
+              mt: 3,
+              py: 1,
+              fontWeight: 'bold',
+            }}
           >
             Sign In
           </Button>

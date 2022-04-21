@@ -9,18 +9,51 @@ import SearchPage from './pages/SearchPage';
 import DetailPage from './pages/DetailPage';
 import PaymentPage from './pages/PaymentPage';
 
+function PrivateRoute({ children }) {
+  const auth = localStorage.getItem('user');
+  return auth !== null ? children : <Navigate to="/login" />;
+}
+
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={Theme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/main/search" element={<SearchPage />} />
-            <Route path="/main/search/detail/:id" element={<DetailPage />} />
-            <Route path="/main/pembayaran/:id" element={<PaymentPage />} />
             <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/main"
+              element={
+                <PrivateRoute>
+                  <MainPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/main/search"
+              element={
+                <PrivateRoute>
+                  <SearchPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/main/search/detail/:id"
+              element={
+                <PrivateRoute>
+                  <DetailPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/main/pembayaran/:id"
+              element={
+                <PrivateRoute>
+                  <PaymentPage />
+                </PrivateRoute>
+              }
+            />
             <Route
               path="*"
               element={

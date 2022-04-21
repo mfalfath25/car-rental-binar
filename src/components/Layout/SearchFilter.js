@@ -17,49 +17,54 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { FiUsers } from 'react-icons/fi';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCars, fetchItems } from '../../redux/actions/itemActions';
+import { getYear } from '../../utils/getYear';
 
 const SearchFilter = (props) => {
+  const dataCar = useSelector((state) => state.items.items);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [tipeMobil, setTipeMobil] = useState('');
-  const [date, setDate] = useState(new Date('2014-08-18T21:11:54'));
-  const [waktuJemput, setWaktuJemput] = useState('');
-  const [data, setData] = useState([]);
-  const baseUrl = 'https://rent-cars-api.herokuapp.com/admin/car';
+  const [ukuranMobil, setUkuranMobil] = useState('');
+  const [tahunMobil, setTahunMobil] = useState('');
+  const [jumlahPenumpang, setJumlahPenumpang] = useState('');
 
   useEffect(() => {
-    getData();
+    dispatch(fetchItems());
   }, []);
-
-  const getData = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}`, {}).then((res) => {
-        setData(res.data);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleTipeMobil = (value) => {
     setTipeMobil(value);
     console.log(value);
   };
 
-  const handleDatePicker = (newValue) => {
-    setDate(newValue);
+  const handleUkuranMobil = (value) => {
+    setUkuranMobil(value);
+    console.log(value);
   };
 
-  const handleWaktuJemput = (event) => {
-    setWaktuJemput(event.target.value);
+  const handleTahunMobil = (value) => {
+    setTahunMobil(value);
+    console.log(value);
   };
 
-  const getSearchPage = () => {
+  const handleJumlahPenumpang = (value) => {
+    setJumlahPenumpang(value);
+    console.log(value);
+  };
+
+  const searchData = { tipeMobil, ukuranMobil, tahunMobil, jumlahPenumpang };
+
+  const getSearchPage = (props) => {
     const path = `search`;
     const verifyPath = '/main/search';
+    console.log('dari getSearch page:', props);
     // eslint-disable-next-line no-unused-vars
     const checkPath = location.pathname !== verifyPath ? navigate(path) : '';
   };
+
   return (
     <>
       <Box
@@ -75,7 +80,7 @@ const SearchFilter = (props) => {
           <Grid container spacing={2} columns={{ sm: 9 }}>
             <Grid item xs={2}>
               <Box>
-                <Typography>Tipe Mobil</Typography>
+                <Typography>Nama Mobil</Typography>
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
                     <Select
@@ -89,7 +94,7 @@ const SearchFilter = (props) => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      {data.map((item) => (
+                      {dataCar?.map((item) => (
                         <MenuItem value={item.name} key={item.id}>
                           {item.name}
                         </MenuItem>
@@ -101,33 +106,13 @@ const SearchFilter = (props) => {
             </Grid>
             <Grid item xs={2}>
               <Box>
-                <Typography>Tanggal</Typography>
-                <Box sx={{ width: '210px' }}>
-                  <FormControl fullWidth>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                      <DesktopDatePicker
-                        disabled={props.disabled}
-                        inputFormat="mm/dd/yyyy"
-                        value={date}
-                        onChange={handleDatePicker}
-                        renderInput={(params) => (
-                          <TextField size="small" {...params} />
-                        )}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box>
-                <Typography>Waktu Jemput/Ambil</Typography>
+                <Typography>Ukuran Mobil</Typography>
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
                     <Select
                       disabled={props.disabled}
-                      value={waktuJemput}
-                      onChange={handleWaktuJemput}
+                      value={ukuranMobil}
+                      onChange={(e) => handleUkuranMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
@@ -135,11 +120,37 @@ const SearchFilter = (props) => {
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={'8'}>08.00</MenuItem>
-                      <MenuItem value={'9'}>09.00</MenuItem>
-                      <MenuItem value={'10'}>10.00</MenuItem>
-                      <MenuItem value={'11'}>11.00</MenuItem>
-                      <MenuItem value={'12'}>12.00</MenuItem>
+                      {dataCar?.map((item) => (
+                        <MenuItem value={item.type} key={item.id}>
+                          {item.type}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box>
+                <Typography>Tahun Mobil</Typography>
+                <Box sx={{ width: '210px' }}>
+                  <FormControl fullWidth>
+                    <Select
+                      disabled={props.disabled}
+                      value={tahunMobil}
+                      onChange={(e) => handleTahunMobil(e.target.value)}
+                      displayEmpty
+                      inputProps={{ 'aria-label': 'Without label' }}
+                      size="small"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {dataCar?.map((item) => (
+                        <MenuItem value={item.time} key={item.id}>
+                          {getYear(item.time)}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </Box>
@@ -150,19 +161,23 @@ const SearchFilter = (props) => {
                 <Typography>Jumlah Penumpang (optional)</Typography>
                 <Box sx={{ width: '210px' }}>
                   <FormControl fullWidth>
-                    <OutlinedInput
+                    <Select
                       disabled={props.disabled}
-                      id="jumlah-penumpang"
-                      type="text"
-                      name="jumlah-penumpang"
-                      placeholder="Jumlah Penumpang"
+                      value={jumlahPenumpang}
+                      onChange={(e) => handleJumlahPenumpang(e.target.value)}
+                      displayEmpty
+                      inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <FiUsers />
-                        </InputAdornment>
-                      }
-                    />
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {dataCar?.map((item) => (
+                        <MenuItem value={item.passenger} key={item.id}>
+                          {item.passenger}
+                        </MenuItem>
+                      ))}
+                    </Select>
                   </FormControl>
                 </Box>
               </Box>
@@ -173,8 +188,9 @@ const SearchFilter = (props) => {
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
                 onClick={() => {
-                  props.searchFilter(tipeMobil);
-                  getSearchPage();
+                  props.searchFilter(searchData);
+                  console.log(searchData);
+                  getSearchPage(searchData);
                 }}
               >
                 Cari Mobil

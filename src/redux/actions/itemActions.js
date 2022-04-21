@@ -1,10 +1,11 @@
-import customApi from '../../apis/api';
+import mockApi from '../../apis/mockApi';
+import carApi from '../../apis/carApi';
 import { ActionTypes } from '../constants';
 
 export const fetchItems = () => {
   return async (dispatch) => {
     try {
-      const response = await customApi.get('/item');
+      const response = await mockApi.get('/item');
       // console.log(response);
       dispatch({
         type: ActionTypes.FETCH_ITEMS,
@@ -19,10 +20,40 @@ export const fetchItems = () => {
 export const fetchItem = (id) => {
   return async (dispatch) => {
     try {
-      const response = await customApi.get(`/item/${id}`);
+      const response = await mockApi.get(`/item/${id}`);
       // console.log(response);
       dispatch({
         type: ActionTypes.SELECTED_ITEM,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const fetchCars = () => {
+  return async (dispatch) => {
+    try {
+      const response = await carApi.get('/car');
+      // console.log(response);
+      dispatch({
+        type: ActionTypes.FETCH_CARS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const fetchCar = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await carApi.get(`/${id}`);
+      // console.log(response);
+      dispatch({
+        type: ActionTypes.FETCH_CAR,
         payload: response.data,
       });
     } catch (error) {

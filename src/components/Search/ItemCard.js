@@ -12,20 +12,27 @@ import {
 import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setButton, fetchItems } from '../../redux/actions/itemActions';
+import {
+  setButton,
+  fetchItems,
+  fetchCars,
+} from '../../redux/actions/itemActions';
 import { getYear } from '../../utils/getYear';
 
 const ItemCard = (props) => {
   const bt = useSelector((state) => state.buttonText.buttonText);
   const data = useSelector((state) => state.items.items);
-  // console.log(data);
+  // const dataCar = useSelector((state) => state.cars.cars);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // const datafull = [data, dataCar];
 
   useEffect(() => {
     dispatch(setButton('Pilih Mobil'));
     dispatch(fetchItems());
-  });
+    // dispatch(fetchCars());
+  }, []);
 
   const handleCard = (id) => {
     const path = `detail/${id}`;
@@ -36,7 +43,13 @@ const ItemCard = (props) => {
     <>
       {typeof data !== 'undefined' ? (
         data
-          ?.filter((item) => item.name.includes(props.search))
+          ?.filter(
+            (item) =>
+              item.name.includes(props.search.tipeMobil) &&
+              item.type.includes(props.search.ukuranMobil) &&
+              item.time.includes(props.search.tahunMobil) &&
+              item.passenger.includes(props.search.jumlahPenumpang)
+          )
           .map((item) => (
             <Grid item xs={4} key={item.id}>
               <Card
