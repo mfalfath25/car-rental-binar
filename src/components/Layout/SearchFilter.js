@@ -35,33 +35,11 @@ const SearchFilter = (props) => {
     dispatch(fetchItems());
   }, []);
 
-  const handleTipeMobil = (value) => {
-    setTipeMobil(value);
-    console.log(value);
-  };
-
-  const handleUkuranMobil = (value) => {
-    setUkuranMobil(value);
-    console.log(value);
-  };
-
-  const handleTahunMobil = (value) => {
-    setTahunMobil(value);
-    console.log(value);
-  };
-
-  const handleJumlahPenumpang = (value) => {
-    setJumlahPenumpang(value);
-    console.log(value);
-  };
-
   const searchData = { tipeMobil, ukuranMobil, tahunMobil, jumlahPenumpang };
 
   const getSearchPage = (props) => {
     const path = `search`;
     const verifyPath = '/main/search';
-    console.log('dari getSearch page:', props);
-    // eslint-disable-next-line no-unused-vars
     const checkPath = location.pathname !== verifyPath ? navigate(path) : '';
   };
 
@@ -86,7 +64,7 @@ const SearchFilter = (props) => {
                     <Select
                       disabled={props.disabled}
                       value={tipeMobil}
-                      onChange={(e) => handleTipeMobil(e.target.value)}
+                      onChange={(e) => setTipeMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
@@ -112,7 +90,7 @@ const SearchFilter = (props) => {
                     <Select
                       disabled={props.disabled}
                       value={ukuranMobil}
-                      onChange={(e) => handleUkuranMobil(e.target.value)}
+                      onChange={(e) => setUkuranMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
@@ -138,7 +116,7 @@ const SearchFilter = (props) => {
                     <Select
                       disabled={props.disabled}
                       value={tahunMobil}
-                      onChange={(e) => handleTahunMobil(e.target.value)}
+                      onChange={(e) => setTahunMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"
@@ -164,7 +142,7 @@ const SearchFilter = (props) => {
                     <Select
                       disabled={props.disabled}
                       value={jumlahPenumpang}
-                      onChange={(e) => handleJumlahPenumpang(e.target.value)}
+                      onChange={(e) => setJumlahPenumpang(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"

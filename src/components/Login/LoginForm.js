@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
 import {
   FormControl,
   OutlinedInput,
@@ -7,90 +7,90 @@ import {
   Alert,
   CircularProgress,
   Box,
-} from '@mui/material';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+  Link,
+} from '@mui/material'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const timer = useRef();
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState();
+  const navigate = useNavigate()
+  const timer = useRef()
+  const baseURL = 'https://rent-cars-api.herokuapp.com'
+  const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState()
   const [message, setMessage] = useState({
     info: '',
     type: '',
-  });
+  })
   const [data, setData] = useState({
     email: '',
     password: '',
-  });
+  })
 
   const handleChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value
     setData({
       ...data,
       [e.target.name]: value,
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+      clearTimeout(timer.current)
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // })
     try {
-      await axios
-        .post('https://rent-cars-api.herokuapp.com/admin/auth/login', data)
-        .then((res) => {
-          if (res.status === 201) {
-            setUser({ id: '1', role: 'admin' });
-            localStorage.setItem('user', JSON.stringify(user.role));
-            if (!loading) {
-              setLoading(true);
-              timer.current = setTimeout(() => {
-                setMessage({ info: 'Login Successful', type: 'success' });
-              }, 1000);
-              timer.current = setTimeout(() => {
-                setLoading(false);
-                navigate('/main');
-              }, 2000);
-            }
+      await axios.post(`${baseURL}/admin/auth/login`, data).then((res) => {
+        if (res.status === 201) {
+          setUser({ id: '1', role: 'admin' })
+          localStorage.setItem('user', JSON.stringify(user.role))
+          if (!loading) {
+            setLoading(true)
+            timer.current = setTimeout(() => {
+              setMessage({ info: 'Login Successful', type: 'success' })
+            }, 1000)
+            timer.current = setTimeout(() => {
+              setLoading(false)
+              navigate('/main')
+            }, 2000)
           }
-        });
+        }
+      })
     } catch (error) {
       if (error.response.status === 400) {
         if (!loading) {
-          setLoading(true);
+          setLoading(true)
           timer.current = setTimeout(() => {
-            setLoading(false);
+            setLoading(false)
             setMessage({
               info: 'Invalid credentials: Wrong Password',
               type: 'warning',
-            });
-          }, 2000);
+            })
+          }, 2000)
         }
       } else if (error.response.status === 404) {
         if (!loading) {
-          setLoading(true);
+          setLoading(true)
           timer.current = setTimeout(() => {
-            setLoading(false);
+            setLoading(false)
             setMessage({
               info: 'Invalid credentials: Email Not Found',
               type: 'warning',
-            });
-          }, 2000);
+            })
+          }, 2000)
         }
       }
     }
-  };
+  }
 
   return (
     <div className="LoginForm">
@@ -152,8 +152,13 @@ const LoginForm = () => {
           )}
         </Box>
       </form>
+      <Box sx={{ pt: 2 }}>
+        <Link href="register" underline="hover">
+          {'Create account? Register'}
+        </Link>
+      </Box>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

@@ -16,7 +16,7 @@ const SearchPage = () => {
     jumlahPenumpang: '',
   };
 
-  console.log('filtering langsung', search);
+  // console.log('filtering langsung', search);
 
   return (
     <>
