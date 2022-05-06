@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
-import Main from './Main'
-import Navbar from '../components/Navbar'
-import Sidenav from '../components/Sidenav'
+import Sidebar from '../components/Dashboard/Sidebar'
+import Main from '../components/Dashboard/Main'
+import Navbar from '../components/Dashboard/Navbar'
+import Sidenav from '../components/Dashboard/Sidenav'
 
 const DashboardPage = () => {
   return (

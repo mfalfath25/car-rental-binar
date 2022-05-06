@@ -18,6 +18,59 @@
   overflow-x: hidden;
 }
 
+.Dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100vh;
+}
+
+.Sidenav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80px;
+  height: 100%;
+  background: #0D28A6;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Sidenav .nav-head {
+  background: #CFD4ED;
+  width: 40px;
+  height: 40px;
+  margin: 1rem 0;
+}
+
+.nav-item {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.8rem 0;
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+
+.nav-item:hover {
+  background: #CFD4ED;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .Auth {
   display: -webkit-box;
   display: -ms-flexbox;
