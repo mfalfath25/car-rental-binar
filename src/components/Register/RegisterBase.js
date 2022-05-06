@@ -1,7 +1,7 @@
 import React from 'react'
 
-const LoginBase = () => {
+const RegisterBase = () => {
   return <div className="AuthBase"></div>
 }
 
-export default LoginBase
+export default RegisterBase
