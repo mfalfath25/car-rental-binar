@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import {
   Box,
   Button,
@@ -8,36 +8,33 @@ import {
   CircularProgress,
   Grid,
   Typography,
-} from '@mui/material';
-import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setButton,
-  fetchItems,
-  fetchCars,
-} from '../../redux/actions/itemActions';
-import { getYear } from '../../utils/getYear';
+} from '@mui/material'
+import { FiUsers, FiSettings, FiCalendar } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setButton, fetchItems } from '../../redux/actions/itemActions'
+import { getYear } from '../../utils/getYear'
 
 const ItemCard = (props) => {
-  const bt = useSelector((state) => state.buttonText.buttonText);
-  const data = useSelector((state) => state.items.items);
+  const bt = useSelector((state) => state.buttonText.buttonText)
+  const data = useSelector((state) => state.items.items)
   // const dataCar = useSelector((state) => state.cars.cars);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // const datafull = [data, dataCar];
 
   useEffect(() => {
-    dispatch(setButton('Pilih Mobil'));
-    dispatch(fetchItems());
+    dispatch(setButton('Pilih Mobil'))
+    dispatch(fetchItems())
     // dispatch(fetchCars());
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleCard = (id) => {
-    const path = `detail/${id}`;
-    navigate(path);
-  };
+    const path = `detail/${id}`
+    navigate(path)
+  }
 
   return (
     <>
@@ -143,7 +140,7 @@ const ItemCard = (props) => {
         </Box>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ItemCard;
+export default ItemCard

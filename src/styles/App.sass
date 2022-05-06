@@ -12,6 +12,7 @@ $mono_1: #000000
 $mono_2: #8A8A8A
 $mono_3: #ffffff
 $mono_4: rgba(255, 255, 255, 0.3)
+$mono_5: #f4f5f7
 
 
 .App
@@ -20,7 +21,7 @@ $mono_4: rgba(255, 255, 255, 0.3)
   flex-direction: column
   width: 100vw
   height: 100vh
-  overflow-x: hidden
+  overflow: hidden
 
 .Wrapper
   // flex-direction: column
@@ -33,7 +34,7 @@ $mono_4: rgba(255, 255, 255, 0.3)
   display: flex
   flex-direction: column
   width: 80px
-  height: 100%
+  height: 100vh
   background: $blue_1
   align-items: center
   .nav-head
@@ -55,6 +56,13 @@ $mono_4: rgba(255, 255, 255, 0.3)
     font-weight: bold
     cursor: pointer
 
+.Main
+  width: 100%
+
+.DashboardContent
+  height: 100%
+  background: $mono_5
+  
 .Auth
   display: flex
   width: 100vw

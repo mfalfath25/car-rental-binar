@@ -15,7 +15,7 @@
           flex-direction: column;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .Dashboard {
@@ -34,7 +34,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   width: 80px;
-  height: 100%;
+  height: 100vh;
   background: #0D28A6;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -69,6 +69,15 @@
   background: #CFD4ED;
   font-weight: bold;
   cursor: pointer;
+}
+
+.Main {
+  width: 100%;
+}
+
+.DashboardContent {
+  height: 100%;
+  background: #f4f5f7;
 }
 
 .Auth {

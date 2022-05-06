@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
   FormControl,
   Grid,
-  InputAdornment,
-  MenuItem,
-  OutlinedInput,
   Paper,
-  Select,
-  TextField,
   Typography,
-} from '@mui/material';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { FiUsers } from 'react-icons/fi';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCars, fetchItems } from '../../redux/actions/itemActions';
-import { getYear } from '../../utils/getYear';
+  Select,
+  MenuItem,
+} from '@mui/material'
+// import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
+// import AdapterDateFns from '@mui/lab/AdapterDateFns'
+// import { FiUsers } from 'react-icons/fi'
+// import axios from 'axios'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchItems } from '../../redux/actions/itemActions'
+import { getYear } from '../../utils/getYear'
 
 const SearchFilter = (props) => {
-  const dataCar = useSelector((state) => state.items.items);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [tipeMobil, setTipeMobil] = useState('');
-  const [ukuranMobil, setUkuranMobil] = useState('');
-  const [tahunMobil, setTahunMobil] = useState('');
-  const [jumlahPenumpang, setJumlahPenumpang] = useState('');
+  const dataCar = useSelector((state) => state.items.items)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [tipeMobil, setTipeMobil] = useState('')
+  const [ukuranMobil, setUkuranMobil] = useState('')
+  const [tahunMobil, setTahunMobil] = useState('')
+  const [jumlahPenumpang, setJumlahPenumpang] = useState('')
 
   useEffect(() => {
-    dispatch(fetchItems());
-  }, []);
+    dispatch(fetchItems())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const searchData = { tipeMobil, ukuranMobil, tahunMobil, jumlahPenumpang };
+  const searchData = { tipeMobil, ukuranMobil, tahunMobil, jumlahPenumpang }
 
   const getSearchPage = (props) => {
-    const path = `search`;
-    const verifyPath = '/main/search';
-    const checkPath = location.pathname !== verifyPath ? navigate(path) : '';
-  };
+    const path = `search`
+    const verifyPath = '/main/search'
+    // eslint-disable-next-line no-unused-vars
+    const checkPath = location.pathname !== verifyPath ? navigate(path) : ''
+  }
 
   return (
     <>
@@ -166,9 +165,9 @@ const SearchFilter = (props) => {
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
                 onClick={() => {
-                  props.searchFilter(searchData);
-                  console.log(searchData);
-                  getSearchPage(searchData);
+                  props.searchFilter(searchData)
+                  console.log(searchData)
+                  getSearchPage(searchData)
                 }}
               >
                 Cari Mobil
@@ -178,7 +177,7 @@ const SearchFilter = (props) => {
         </Paper>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default SearchFilter;
+export default SearchFilter
