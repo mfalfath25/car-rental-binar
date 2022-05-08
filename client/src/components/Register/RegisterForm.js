@@ -10,7 +10,10 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
+  Stack,
 } from '@mui/material'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -171,7 +174,7 @@ const RegisterForm = () => {
               fontWeight: 'bold',
             }}
           >
-            Register
+            Sign Up
           </Button>
           {loading && (
             <CircularProgress
@@ -186,11 +189,17 @@ const RegisterForm = () => {
           )}
         </Box>
       </form>
-      <Box sx={{ pt: 2 }}>
+      <Stack spacing={2} sx={{ pt: 2 }}>
         <Link href="login" underline="hover">
-          {'Already have account? Login'}
+          {'Already have an account? Login'}
         </Link>
-      </Box>
+        <Button variant="outlined" startIcon={<FcGoogle />}>
+          Sign Up with Google
+        </Button>
+        <Button variant="outlined" startIcon={<FaGithub />}>
+          Sign Up with Github
+        </Button>
+      </Stack>
     </div>
   )
 }

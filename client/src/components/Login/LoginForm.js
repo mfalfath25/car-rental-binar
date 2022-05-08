@@ -8,9 +8,12 @@ import {
   CircularProgress,
   Box,
   Link,
+  Stack,
 } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
 
 const LoginForm = () => {
   const navigate = useNavigate()
@@ -92,6 +95,10 @@ const LoginForm = () => {
     }
   }
 
+  const googleAuth = () => {
+    window.open('http://localhost:5000/auth/google', '_self')
+  }
+
   return (
     <div className="LoginForm">
       {message.type ? (
@@ -152,11 +159,21 @@ const LoginForm = () => {
           )}
         </Box>
       </form>
-      <Box sx={{ pt: 2 }}>
+      <Stack spacing={2} sx={{ pt: 2 }}>
         <Link href="register" underline="hover">
           {'Create account? Register'}
         </Link>
-      </Box>
+        <Button
+          variant="outlined"
+          startIcon={<FcGoogle />}
+          onClick={googleAuth}
+        >
+          Sign In with Google
+        </Button>
+        <Button variant="outlined" startIcon={<FaGithub />}>
+          Sign In with Github
+        </Button>
+      </Stack>
     </div>
   )
 }
