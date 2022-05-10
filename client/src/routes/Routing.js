@@ -8,6 +8,7 @@ import PaymentPage from '../pages/PaymentPage'
 import RegisterPage from '../pages/RegisterPage'
 import DashboardPage from '../pages/DashboardPage'
 import { createContext, useEffect, useState } from 'react'
+import axios from 'axios'
 
 // function PrivateRoute({ children }) {
 //   const auth = localStorage.getItem('user');
@@ -19,30 +20,31 @@ export const Data = createContext()
 const Routing = () => {
   const [user, setUser] = useState(null)
 
-  const getUser = () => {
-    fetch('http://localhost:5000/auth/login/success', {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': true,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) return res.json()
-      })
-      .then((res) => {
-        setUser(res.user)
-      })
-      .catch((err) => console.log(err))
+  const getUser = async () => {
+    try {
+      await axios
+        .get('http://localhost:5000/auth/login/success', {
+          withCredentials: true,
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': true,
+          },
+        })
+        .then((res) => {
+          setUser(res.data.user)
+        })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   useEffect(() => {
     getUser()
   }, [])
 
-  console.log('user : ', user)
+  console.log('user data: ', user)
+
   return (
     <BrowserRouter>
       <Data.Provider value={{ user }}>
@@ -53,20 +55,26 @@ const Routing = () => {
             element={user ? <Navigate to="/main" /> : <LoginPage />}
           />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/main/search" element={<SearchPage />} />
-          <Route path="/main/search/detail/:id" element={<DetailPage />} />
-          <Route path="/main/pembayaran/:id" element={<PaymentPage />} />
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: '1rem' }}>
-                <h1>404</h1>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
+          {user ? (
+            <>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/main/search" element={<SearchPage />} />
+              <Route path="/main/search/detail/:id" element={<DetailPage />} />
+              <Route path="/main/pembayaran/:id" element={<PaymentPage />} />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: '1rem' }}>
+                    <h1>404</h1>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+            </>
+          ) : (
+            <Route path="*" element={<Navigate to="/login" />} />
+          )}
         </Routes>
       </Data.Provider>
     </BrowserRouter>

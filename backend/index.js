@@ -1,55 +1,138 @@
-require('dotenv').config()
-require('./passport')
 const express = require('express')
-const cookieSession = require('cookie-session')
-const cors = require('cors')
-const passport = require('passport')
-const { hashSync } = require('bcrypt')
-const authRoute = require('./routes/auth')
-// const UserModel = require('./database')
-
 const app = express()
+const cors = require('cors')
+const { hashSync, compareSync } = require('bcrypt')
+const UserModel = require('./database')
+const jwt = require('jsonwebtoken')
+const passport = require('passport')
 
-// google and github auth is consider session-based strategy
-// so we need to use cookie-session to store the session
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+app.use(passport.initialize())
 
-// jwt strategy is consider stateless/token-based strategy
-// jwt will create a new credentials in a form of a token
-// then we can use the token to access the protected resources in each subsequent request
+require('./passport')
 
-// body-parser middleware
+app.post('/register', (req, res) => {
+  const user = new UserModel({
+    username: req.body.username,
+    password: hashSync(req.body.password, 10),
+  })
+
+  user
+    .save()
+    .then((user) => {
+      res.send({
+        success: true,
+        message: 'User created successfully.',
+        user: {
+          id: user._id,
+          username: user.username,
+        },
+      })
+    })
+    .catch((err) => {
+      res.send({
+        success: false,
+        message: 'Something went wrong',
+        error: err,
+      })
+    })
+})
+
+app.post('/login', (req, res) => {
+  UserModel.findOne({ username: req.body.username }).then((user) => {
+    //No user found
+    if (!user) {
+      return res.status(401).send({
+        success: false,
+        message: 'Could not find the user.',
+      })
+    }
+
+    //Incorrect password
+    if (!compareSync(req.body.password, user.password)) {
+      return res.status(401).send({
+        success: false,
+        message: 'Incorrect password',
+      })
+    }
+
+    const payload = {
+      username: user.username,
+      id: user._id,
+    }
+
+    const token = jwt.sign(payload, 'Random string', { expiresIn: '1d' })
+
+    return res.status(200).send({
+      success: true,
+      message: 'Logged in successfully!',
+      token: 'Bearer ' + token,
+    })
+  })
+})
+
+app.get(
+  '/protected',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    return res.status(200).send({
+      success: true,
+      user: {
+        id: req.user._id,
+        username: req.user.username,
+      },
+    })
+  }
+)
+
+app.listen(5000, () => console.log('Listening to port 5000'))
+
+// require('dotenv').config()
+// const express = require('express')
+// const cors = require('cors')
+// const { hashSync, compareSync } = require('bcrypt')
+// const User = require('./database')
+// const jwt = require('jsonwebtoken')
+// const passport = require('passport')
+// require('./passport')
+
+// const cookieSession = require('cookie-session')
+// const authRoute = require('./routes/auth')
+
+// const app = express()
+
+// app.use(cors())
 // app.use(express.json)
 // app.use(express.urlencoded({ extended: true }))
-// access the backend from the frontend with cors
-// app.use(cors())
+// app.use(passport.initialize())
 
-// set cookie-session
-app.use(
-  cookieSession({ name: 'session', keys: ['key1'], maxAge: 24 * 60 * 60 * 100 })
-)
-app.use(passport.initialize())
-app.use(passport.session())
+// // COOKIE MIDDLEWARE SETUP
+// // set cookie-session
+// // app.use(
+// //   cookieSession({ name: 'session', keys: ['key1'], maxAge: 24 * 60 * 60 * 100 })
+// // )
+// // app.use(passport.initialize())
+// // app.use(passport.session())
 
-app.use(
-  cors({
-    origin: 'http://localhost:3000', //Client Server
-    methods: 'GET, POST, PUT, DELETE',
-    credentials: true,
-  })
-)
+// // app.use(
+// //   cors({
+// //     origin: 'http://localhost:3000', //Client Server
+// //     methods: 'GET, POST, PUT, DELETE',
+// //     credentials: true,
+// //   })
+// // )
 
-// set router
-app.use('/auth', authRoute)
+// // set router
+// // app.use('/auth', authRoute)
 
-// set new port from env, default back to 3000
-const port = process.env.PORT
-app.listen(port, () => console.log('ping on port ' + port))
-
+// // JWT ROUTE SETUP
 // // register
 // app.post('/register', (req, res) => {
-//   const user = new UserModel({
+//   const user = new User({
 //     username: req.body.username,
-//     password: hashSync(req.body.passpord, 10),
+//     password: hashSync(req.body.password, 10),
 //   })
 
 //   user
@@ -67,7 +150,7 @@ app.listen(port, () => console.log('ping on port ' + port))
 //     .catch((err) => {
 //       res.send({
 //         success: false,
-//         message: 'Somehing went wrong',
+//         message: 'Something went wrong',
 //         error: err,
 //       })
 //     })
@@ -75,7 +158,7 @@ app.listen(port, () => console.log('ping on port ' + port))
 
 // // login
 // app.post('/login', (req, res) => {
-//   UserModel.findOne({ username: req.body.username }).then((user) => {
+//   User.findOne({ username: req.body.username }).then((user) => {
 //     // no user found
 //     if (!user) {
 //       return res.status(401).send({
@@ -83,5 +166,46 @@ app.listen(port, () => console.log('ping on port ' + port))
 //         message: 'Could not find the user',
 //       })
 //     }
+//     // password incorrect
+//     if (compareSync(req.body.password, user.password)) {
+//       return res.status(401).send({
+//         success: false,
+//         message: 'Incorrect password',
+//       })
+//     }
+//     // create token payload
+//     const payload = {
+//       username: user.username,
+//       id: user._id,
+//     }
+//     // create jwt token
+//     const token = jwt.sign(payload, process.env.JWT_SECRET, {
+//       expiresIn: '15m',
+//     })
+
+//     // login success
+//     return res.status(200).send({
+//       success: true,
+//       message: 'Logged in successfully',
+//       token: 'Bearer ' + token,
+//     })
 //   })
 // })
+
+// app.get(
+//   '/protected',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     return res.status(200).send({
+//       success: true,
+//       user: {
+//         id: req.user._id,
+//         username: req.user.username,
+//       },
+//     })
+//   }
+// )
+
+// // set new port from env, default back to 3000
+// const port = process.env.PORT
+// app.listen(port, () => console.log('ping on port ' + port))
