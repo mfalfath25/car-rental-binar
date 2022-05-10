@@ -1,8 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync } = require('bcrypt')
-const UserModel = require('./database')
+const {mongoClient, User} = require('./database')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
@@ -14,34 +15,55 @@ app.use(passport.initialize())
 require('./passport')
 
 app.post('/register', (req, res) => {
-  const user = new UserModel({
-    username: req.body.username,
-    password: hashSync(req.body.password, 10),
-  })
+  const sentData = {
+    username: req.body.username
+  }
+  // get database name
+  const mongodb = context.services.get("mongodb-atlas")
+  const dbo = mongodb.db("passport-jwt")
+  // get database collection
+  dbo
+  .collection("users")
+  .findOne(sentData, function(err, data) {
+    if (data.username) {
+      // handle case where user already exists
+      console.log('Username already exists')
+      dbo.close()
+      // res.redirect('/')
+    } else {
+      // handle case where user doesn't exist yet
+      const user = new User({
+        username: req.body.username,
+        password: hashSync(req.body.password, 10),
+      })
 
-  user
-    .save()
-    .then((user) => {
-      res.send({
-        success: true,
-        message: 'User created successfully.',
-        user: {
-          id: user._id,
-          username: user.username,
-        },
-      })
-    })
-    .catch((err) => {
-      res.send({
-        success: false,
-        message: 'Something went wrong',
-        error: err,
-      })
-    })
+      user
+        .save()
+        .then((user) => {
+          res.send({
+            success: true,
+            message: 'User created successfully.',
+            user: {
+              id: user._id,
+              username: user.username,
+            },
+          })
+        })
+        .catch((err) => {
+          res.send({
+            success: false,
+            message: 'Something went wrong',
+            error: err,
+          })
+        })
+    }
+})
+
+
 })
 
 app.post('/login', (req, res) => {
-  UserModel.findOne({ username: req.body.username }).then((user) => {
+  User.findOne({ username: req.body.username }).then((user) => {
     //No user found
     if (!user) {
       return res.status(401).send({
@@ -63,7 +85,7 @@ app.post('/login', (req, res) => {
       id: user._id,
     }
 
-    const token = jwt.sign(payload, 'Random string', { expiresIn: '1d' })
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
 
     return res.status(200).send({
       success: true,
@@ -87,7 +109,8 @@ app.get(
   }
 )
 
-app.listen(5000, () => console.log('Listening to port 5000'))
+const port = process.env.PORT
+app.listen(port, () => console.log('Listening to port ' + port))
 
 // require('dotenv').config()
 // const express = require('express')

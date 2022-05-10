@@ -117,6 +117,7 @@ const LoginForm = () => {
             placeholder="Contoh: johndee@gmail.com"
             size="small"
             onChange={handleChange}
+            role="input-email"
           />
         </FormControl>
         <FormControl fullWidth>
@@ -130,6 +131,7 @@ const LoginForm = () => {
             placeholder="6+ Karakter"
             size="small"
             onChange={handleChange}
+            role="input-password"
           />
         </FormControl>
         <Box sx={{ position: 'relative' }}>
@@ -143,6 +145,7 @@ const LoginForm = () => {
               py: 1,
               fontWeight: 'bold',
             }}
+            role="button-login"
           >
             Sign In
           </Button>

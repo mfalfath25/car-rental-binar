@@ -1,17 +1,27 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 
-mongoose.connect(
-  'mongodb+srv://benz:99gDBvhkEasujyQ0@cluster0.m7ias.mongodb.net/passport-jwt?retryWrites=true&w=majority'
-)
+const MONGODB_URI = process.env.MONGODB_URI
+const mongoClient = mongoose.connect(
+  MONGODB_URI
+).then(()=>{
+  console.log('Connected to DB')
+}).catch((err)=> {
+  console.log('MongoDB connection error')
+  console.log(err)
+})
 
 const userSchema = mongoose.Schema({
   username: String,
   password: String,
 })
 
-const UserModel = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
-module.exports = UserModel
+const db = mongoose.connection
+console.log(db.client['MongoClient'])
+// console.log(mongoClient.connection)
+module.exports = {mongoClient, User}
 
 // require('dotenv').config()
 // const mongoose = require('mongoose')
