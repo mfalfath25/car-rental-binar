@@ -1,15 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  FormControl,
-  OutlinedInput,
-  Button,
-  Typography,
-  Alert,
-  CircularProgress,
-  Box,
-  Link,
-  Stack,
-} from '@mui/material'
+import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, Link, Stack } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
@@ -18,9 +8,8 @@ import { FaGithub } from 'react-icons/fa'
 const LoginForm = () => {
   const navigate = useNavigate()
   const timer = useRef()
-  const baseURL = 'https://rent-cars-api.herokuapp.com'
+  const BaseURL = 'http://localhost:5000'
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState()
   const [message, setMessage] = useState({
     info: '',
     type: '',
@@ -44,55 +33,24 @@ const LoginForm = () => {
     }
   }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
+    const dataform = new FormData(e.currentTarget)
     // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
+    //   email: dataform.get('email'),
+    //   password: dataform.get('password'),
     // })
-    try {
-      await axios.post(`${baseURL}/admin/auth/login`, data).then((res) => {
-        if (res.status === 201) {
-          setUser({ id: '1', role: 'admin' })
-          localStorage.setItem('user', JSON.stringify(user.role))
-          if (!loading) {
-            setLoading(true)
-            timer.current = setTimeout(() => {
-              setMessage({ info: 'Login Successful', type: 'success' })
-            }, 1000)
-            timer.current = setTimeout(() => {
-              setLoading(false)
-              navigate('/main')
-            }, 2000)
-          }
-        }
+    console.log(data.email, data.password)
+
+    axios
+      .post(`${BaseURL}/login`, data)
+      .then((res, req) => {
+        console.log(res.data)
+        localStorage.setItem('token', JSON.stringify(res.data.token))
       })
-    } catch (error) {
-      if (error.response.status === 400) {
-        if (!loading) {
-          setLoading(true)
-          timer.current = setTimeout(() => {
-            setLoading(false)
-            setMessage({
-              info: 'Invalid credentials: Wrong Password',
-              type: 'warning',
-            })
-          }, 2000)
-        }
-      } else if (error.response.status === 404) {
-        if (!loading) {
-          setLoading(true)
-          timer.current = setTimeout(() => {
-            setLoading(false)
-            setMessage({
-              info: 'Invalid credentials: Email Not Found',
-              type: 'warning',
-            })
-          }, 2000)
-        }
-      }
-    }
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const googleAuth = () => {
@@ -124,15 +82,7 @@ const LoginForm = () => {
           <Typography variant="h6" sx={{ mt: 2 }}>
             Password
           </Typography>
-          <OutlinedInput
-            id="pass-input"
-            type="password"
-            name="password"
-            placeholder="6+ Karakter"
-            size="small"
-            onChange={handleChange}
-            role="input-password"
-          />
+          <OutlinedInput id="pass-input" type="password" name="password" placeholder="6+ Karakter" size="small" onChange={handleChange} role="input-password" />
         </FormControl>
         <Box sx={{ position: 'relative' }}>
           <Button
@@ -166,11 +116,7 @@ const LoginForm = () => {
         <Link href="register" underline="hover">
           {'Create account? Register'}
         </Link>
-        <Button
-          variant="outlined"
-          startIcon={<FcGoogle />}
-          onClick={googleAuth}
-        >
+        <Button variant="outlined" startIcon={<FcGoogle />} onClick={googleAuth}>
           Sign In with Google
         </Button>
         <Button variant="outlined" startIcon={<FaGithub />}>

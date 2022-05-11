@@ -9,7 +9,13 @@ const passport = require('passport')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// app.use(cors())
+app.use(
+  cors({
+    origin: 'http://localhost:3000', //Client Server
+    methods: 'GET, POST, PUT, DELETE',
+    credentials: true,
+  })
+)
 app.use(passport.initialize())
 
 require('./passport')
@@ -80,18 +86,21 @@ app.post('/login', (req, res) => {
     }
 
     //User found and password is correct
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30m' })
+    if (user) {
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-    if (req.body.role === 'user') {
-      res.redirect('/main')
-    } else if (req.body.role === 'admin') {
-      res.redirect('/dashboard')
+      // if (req.body.role === 'user') {
+      //   res.redirect('/main')
+      // } else if (req.body.role === 'admin') {
+      //   res.redirect('/dashboard')
+      // }
+      return res.status(200).send({
+        success: true,
+        message: 'Logged in successfully!',
+        token: 'Bearer ' + token,
+        role: user.role,
+      })
     }
-    return res.status(200).send({
-      success: true,
-      message: 'Logged in successfully!',
-      token: 'Bearer ' + token,
-    })
   })
 })
 
@@ -127,14 +136,6 @@ const authRoute = require('./routes/auth')
 // set cookie-session
 app.use(cookieSession({ name: 'session', keys: ['key1'], maxAge: 24 * 60 * 60 * 100 }))
 app.use(passport.session())
-
-app.use(
-  cors({
-    origin: 'http://localhost:3000', //Client Server
-    methods: 'GET, POST, PUT, DELETE',
-    credentials: true,
-  })
-)
 
 // set router
 app.use('/auth', authRoute)
