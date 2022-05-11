@@ -2,14 +2,15 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 
 const MONGODB_URI = process.env.MONGODB_URI
-const mongoClient = mongoose.connect(
-  MONGODB_URI
-).then(()=>{
-  console.log('Connected to DB')
-}).catch((err)=> {
-  console.log('MongoDB connection error')
-  console.log(err)
-})
+const mongoClient = mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    console.log('Connected to DB')
+  })
+  .catch((err) => {
+    console.log('MongoDB connection error')
+    console.log(err)
+  })
 
 const userSchema = mongoose.Schema({
   username: String,
@@ -18,10 +19,10 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 
-const db = mongoose.connection
-console.log(db.client['MongoClient'])
+// const db = mongoose.connection
+// console.log(db.client['MongoClient'])
 // console.log(mongoClient.connection)
-module.exports = {mongoClient, User}
+module.exports = { mongoClient, User }
 
 // require('dotenv').config()
 // const mongoose = require('mongoose')

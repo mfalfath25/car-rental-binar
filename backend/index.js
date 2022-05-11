@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync } = require('bcrypt')
-const {mongoClient, User} = require('./database')
+const { mongoClient, User } = require('./database')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
@@ -15,20 +15,13 @@ app.use(passport.initialize())
 require('./passport')
 
 app.post('/register', (req, res) => {
-  const sentData = {
-    username: req.body.username
-  }
-  // get database name
-  const mongodb = context.services.get("mongodb-atlas")
-  const dbo = mongodb.db("passport-jwt")
-  // get database collection
-  dbo
-  .collection("users")
-  .findOne(sentData, function(err, data) {
-    if (data.username) {
+  User.findOne({ username: req.body.username }).then((user) => {
+    if (user) {
       // handle case where user already exists
-      console.log('Username already exists')
-      dbo.close()
+      return res.status(401).send({
+        success: false,
+        message: 'Username already exists',
+      })
       // res.redirect('/')
     } else {
       // handle case where user doesn't exist yet
@@ -57,9 +50,7 @@ app.post('/register', (req, res) => {
           })
         })
     }
-})
-
-
+  })
 })
 
 app.post('/login', (req, res) => {
@@ -95,19 +86,15 @@ app.post('/login', (req, res) => {
   })
 })
 
-app.get(
-  '/protected',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    return res.status(200).send({
-      success: true,
-      user: {
-        id: req.user._id,
-        username: req.user.username,
-      },
-    })
-  }
-)
+app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
+  return res.status(200).send({
+    success: true,
+    user: {
+      id: req.user._id,
+      username: req.user.username,
+    },
+  })
+})
 
 const port = process.env.PORT
 app.listen(port, () => console.log('Listening to port ' + port))
