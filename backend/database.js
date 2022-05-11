@@ -13,16 +13,14 @@ const mongoClient = mongoose
   })
 
 const userSchema = mongoose.Schema({
-  username: String,
+  email: String,
   password: String,
+  role: String,
 })
 
 const User = mongoose.model('User', userSchema)
 
-// const db = mongoose.connection
-// console.log(db.client['MongoClient'])
-// console.log(mongoClient.connection)
-module.exports = { mongoClient, User }
+module.exports = { User }
 
 // require('dotenv').config()
 // const mongoose = require('mongoose')
@@ -43,7 +41,7 @@ module.exports = { mongoClient, User }
 // // Schema constructor
 // // A Mongoose 'schema' is a document data structure that is enforced via the application layer.
 // const userSchema = mongoose.Schema({
-//   username: String,
+//   email: String,
 //   password: String,
 // })
 
