@@ -12,7 +12,7 @@ const RegisterPage = () => {
           <Grid item className="header">
             <div className="car-vector"></div>
             <Typography variant="h5" sx={{ my: 3, fontWeight: 'bold' }}>
-              Register your account
+              Create new Account
             </Typography>
           </Grid>
           <Grid item>

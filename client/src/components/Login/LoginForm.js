@@ -1,95 +1,58 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  FormControl,
-  OutlinedInput,
-  Button,
-  Typography,
-  Alert,
-  CircularProgress,
-  Box,
-  Link,
-} from '@mui/material'
+import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, Link, Stack } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
 
 const LoginForm = () => {
   const navigate = useNavigate()
   const timer = useRef()
-  const baseURL = 'https://rent-cars-api.herokuapp.com'
+  const BaseURL = 'http://localhost:5000'
   const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState()
   const [message, setMessage] = useState({
     info: '',
     type: '',
   })
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  })
-
-  const handleChange = (e) => {
-    const value = e.target.value
-    setData({
-      ...data,
-      [e.target.name]: value,
-    })
-  }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
-    return () => {
-      clearTimeout(timer.current)
-    }
+    const token = localStorage.getItem('token')
+    axios
+      .get('http://localhost:5000/protected', {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        navigate('/protected')
+      })
+      .catch((err) => {
+        console.log(err)
+        navigate('/login')
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // })
-    try {
-      await axios.post(`${baseURL}/admin/auth/login`, data).then((res) => {
-        if (res.status === 201) {
-          setUser({ id: '1', role: 'admin' })
-          localStorage.setItem('user', JSON.stringify(user.role))
-          if (!loading) {
-            setLoading(true)
-            timer.current = setTimeout(() => {
-              setMessage({ info: 'Login Successful', type: 'success' })
-            }, 1000)
-            timer.current = setTimeout(() => {
-              setLoading(false)
-              navigate('/main')
-            }, 2000)
-          }
-        }
+    console.log(email, password)
+    await axios
+      .post('http://localhost:5000/login', { email, password })
+      .then((user) => {
+        console.log(user)
+        localStorage.setItem('token', user.data.token)
+        navigate('/protected')
       })
-    } catch (error) {
-      if (error.response.status === 400) {
-        if (!loading) {
-          setLoading(true)
-          timer.current = setTimeout(() => {
-            setLoading(false)
-            setMessage({
-              info: 'Invalid credentials: Wrong Password',
-              type: 'warning',
-            })
-          }, 2000)
-        }
-      } else if (error.response.status === 404) {
-        if (!loading) {
-          setLoading(true)
-          timer.current = setTimeout(() => {
-            setLoading(false)
-            setMessage({
-              info: 'Invalid credentials: Email Not Found',
-              type: 'warning',
-            })
-          }, 2000)
-        }
-      }
-    }
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const googleAuth = () => {
+    window.open('http://localhost:5000/auth/google', '_self')
   }
 
   return (
@@ -109,7 +72,8 @@ const LoginForm = () => {
             name="email"
             placeholder="Contoh: johndee@gmail.com"
             size="small"
-            onChange={handleChange}
+            onChange={(event) => setEmail(event.target.value)}
+            role="input-email"
           />
         </FormControl>
         <FormControl fullWidth>
@@ -122,7 +86,8 @@ const LoginForm = () => {
             name="password"
             placeholder="6+ Karakter"
             size="small"
-            onChange={handleChange}
+            onChange={(event) => setPassword(event.target.value)}
+            role="input-password"
           />
         </FormControl>
         <Box sx={{ position: 'relative' }}>
@@ -136,6 +101,7 @@ const LoginForm = () => {
               py: 1,
               fontWeight: 'bold',
             }}
+            role="button-login"
           >
             Sign In
           </Button>
@@ -152,11 +118,17 @@ const LoginForm = () => {
           )}
         </Box>
       </form>
-      <Box sx={{ pt: 2 }}>
+      <Stack spacing={2} sx={{ pt: 2 }}>
         <Link href="register" underline="hover">
           {'Create account? Register'}
         </Link>
-      </Box>
+        <Button variant="outlined" startIcon={<FcGoogle />} onClick={googleAuth}>
+          Sign In with Google
+        </Button>
+        <Button variant="outlined" startIcon={<FaGithub />}>
+          Sign In with Github
+        </Button>
+      </Stack>
     </div>
   )
 }

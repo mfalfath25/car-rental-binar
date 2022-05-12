@@ -4,6 +4,9 @@ import React from 'react'
 const pages = ['Our Services', 'Why Us', 'Testimonial', 'FAQ']
 
 const Navbar = () => {
+  const logout = () => {
+    window.open('http://localhost:5000/auth/logout', '_self')
+  }
   return (
     <>
       <Box
@@ -32,8 +35,12 @@ const Navbar = () => {
               </Typography>
             </Link>
           ))}
-          <Button variant="contained" sx={{ background: '#5CB85F' }}>
-            Register
+          <Button
+            variant="contained"
+            sx={{ background: '#f34646' }}
+            onClick={logout}
+          >
+            Logout
           </Button>
         </Box>
       </Box>
