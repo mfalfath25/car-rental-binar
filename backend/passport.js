@@ -6,7 +6,7 @@ const User = require('./database')
 const passport = require('passport')
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = process.env.JWT_SECRET
+opts.secretOrKey = 'Random string'
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
@@ -18,7 +18,7 @@ passport.use(
         return done(null, user)
       } else {
         return done(null, false)
-        // or create a new account
+        // or you could create a new account
       }
     })
   })

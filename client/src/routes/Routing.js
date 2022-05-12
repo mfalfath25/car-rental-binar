@@ -7,6 +7,7 @@ import DetailPage from '../pages/DetailPage'
 import PaymentPage from '../pages/PaymentPage'
 import RegisterPage from '../pages/RegisterPage'
 import DashboardPage from '../pages/DashboardPage'
+import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -43,18 +44,16 @@ const Routing = () => {
     getUser()
   }, [])
 
-  console.log('user data: ', user)
+  // console.log('user data: ', user)
 
   return (
     <BrowserRouter>
       <Data.Provider value={{ user }}>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/main" /> : <LoginPage />}
-          />
+          <Route path="/login" element={user ? <Navigate to="/main" /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/protected" element={<Protected />} />
           {user ? (
             <>
               <Route path="/dashboard" element={<DashboardPage />} />

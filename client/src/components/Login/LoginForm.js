@@ -14,39 +14,38 @@ const LoginForm = () => {
     info: '',
     type: '',
   })
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  })
+  // const [data, setData] = useState({
+  //   email: '',
+  //   password: '',
+  // })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleChange = (e) => {
-    const value = e.target.value
-    setData({
-      ...data,
-      [e.target.name]: value,
-    })
-  }
+  // const handleChange = (e) => {
+  //   const value = e.target.value
+  //   setData({
+  //     ...data,
+  //     [e.target.name]: value,
+  //   })
+  // }
 
   useEffect(() => {
-    return () => {
-      clearTimeout(timer.current)
-    }
+    // return () => {
+    //   clearTimeout(timer.current)
+    // }
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const dataform = new FormData(e.currentTarget)
-    // console.log({
-    //   email: dataform.get('email'),
-    //   password: dataform.get('password'),
-    // })
-    console.log(data.email, data.password)
+    // console.log(data.email, data.password)
+    console.log(email, password)
 
-    axios
-      .post(`${BaseURL}/login`, data)
-      .then((res, req) => {
-        console.log(res.data)
+    await axios
+      .post(`${BaseURL}/login`, { email, password })
+      .then((res) => {
         localStorage.setItem('token', JSON.stringify(res.data.token))
+        console.log(res)
+        navigate('/protected')
       })
       .catch((err) => {
         console.log(err)
@@ -74,7 +73,7 @@ const LoginForm = () => {
             name="email"
             placeholder="Contoh: johndee@gmail.com"
             size="small"
-            onChange={handleChange}
+            onChange={(event) => setEmail(event.target.value)}
             role="input-email"
           />
         </FormControl>
@@ -82,7 +81,15 @@ const LoginForm = () => {
           <Typography variant="h6" sx={{ mt: 2 }}>
             Password
           </Typography>
-          <OutlinedInput id="pass-input" type="password" name="password" placeholder="6+ Karakter" size="small" onChange={handleChange} role="input-password" />
+          <OutlinedInput
+            id="pass-input"
+            type="password"
+            name="password"
+            placeholder="6+ Karakter"
+            size="small"
+            onChange={(event) => setPassword(event.target.value)}
+            role="input-password"
+          />
         </FormControl>
         <Box sx={{ position: 'relative' }}>
           <Button

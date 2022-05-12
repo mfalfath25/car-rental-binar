@@ -86,42 +86,23 @@ app.post('/login', (req, res) => {
     }
 
     //User found and password is correct
-    if (user) {
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
+    const token = jwt.sign(payload, 'Random string', { expiresIn: '1d' })
 
-      // if (req.body.role === 'user') {
-      //   res.redirect('/main')
-      // } else if (req.body.role === 'admin') {
-      //   res.redirect('/dashboard')
-      // }
-      return res.status(200).send({
-        success: true,
-        message: 'Logged in successfully!',
-        token: 'Bearer ' + token,
-        role: user.role,
-      })
-    }
+    return res.status(200).send({
+      success: true,
+      message: 'Logged in successfully!',
+      token: 'Bearer ' + token,
+      role: user.role,
+    })
   })
 })
 
-app.get('/main', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
   return res.status(200).send({
     success: true,
     user: {
       id: req.user._id,
       email: req.user.email,
-      role: req.user.role,
-    },
-  })
-})
-
-app.get('/dashboard', passport.authenticate('jwt', { session: false }), (req, res) => {
-  return res.status(200).send({
-    success: true,
-    user: {
-      id: req.user._id,
-      email: req.user.email,
-      role: req.user.role,
     },
   })
 })
