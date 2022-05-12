@@ -5,7 +5,7 @@ const MONGODB_URI = process.env.MONGODB_URI
 const mongoClient = mongoose
   .connect(MONGODB_URI)
   .then(() => {
-    console.log(`Connected to ${User.db.name} database`)
+    console.log(`Connected to ${UserModel.db.name} database`)
   })
   .catch((err) => {
     console.log('MongoDB connection error')
@@ -22,6 +22,6 @@ const userSchema = mongoose.Schema({
 
 // Compile schema into a model
 // 'Models' are higher-order constructors that take a schema and create an instance of a document.
-const User = mongoose.model('User', userSchema)
+const UserModel = mongoose.model('User', userSchema)
 
-module.exports = { User }
+module.exports = UserModel

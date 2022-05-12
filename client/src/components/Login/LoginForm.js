@@ -14,37 +14,36 @@ const LoginForm = () => {
     info: '',
     type: '',
   })
-  // const [data, setData] = useState({
-  //   email: '',
-  //   password: '',
-  // })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // const handleChange = (e) => {
-  //   const value = e.target.value
-  //   setData({
-  //     ...data,
-  //     [e.target.name]: value,
-  //   })
-  // }
-
   useEffect(() => {
-    // return () => {
-    //   clearTimeout(timer.current)
-    // }
+    const token = localStorage.getItem('token')
+    axios
+      .get('http://localhost:5000/protected', {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        navigate('/protected')
+      })
+      .catch((err) => {
+        console.log(err)
+        navigate('/login')
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log(data.email, data.password)
     console.log(email, password)
-
     await axios
-      .post(`${BaseURL}/login`, { email, password })
-      .then((res) => {
-        localStorage.setItem('token', JSON.stringify(res.data.token))
-        console.log(res)
+      .post('http://localhost:5000/login', { email, password })
+      .then((user) => {
+        console.log(user)
+        localStorage.setItem('token', user.data.token)
         navigate('/protected')
       })
       .catch((err) => {

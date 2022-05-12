@@ -2,7 +2,7 @@ require('dotenv').config()
 const JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt
 const opts = {}
-const User = require('./database')
+const UserModel = require('./database')
 const passport = require('passport')
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
@@ -10,7 +10,7 @@ opts.secretOrKey = 'Random string'
 
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findOne({ id: jwt_payload.id }, function (err, user) {
+    UserModel.findOne({ id: jwt_payload.id }, function (err, user) {
       if (err) {
         return done(err, false)
       }

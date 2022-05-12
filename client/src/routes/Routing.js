@@ -51,8 +51,9 @@ const Routing = () => {
       <Data.Provider value={{ user }}>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={user ? <Navigate to="/main" /> : <LoginPage />} />
+          {/* <Route path="/login" element={user ? <Navigate to="/main" /> : <LoginPage />} /> */}
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/protected" element={<Protected />} />
           {user ? (
             <>

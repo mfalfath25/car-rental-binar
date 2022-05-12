@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync } = require('bcrypt')
-const { User } = require('./database')
+const UserModel = require('./database')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 
@@ -21,17 +21,16 @@ app.use(passport.initialize())
 require('./passport')
 
 app.post('/register', (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
+  UserModel.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       // handle case where user already exists
       return res.status(401).send({
         success: false,
         message: 'Email already exists',
       })
-      // res.redirect('/')
     } else {
       // handle case where user doesn't exist yet
-      const user = new User({
+      const user = new UserModel({
         email: req.body.email,
         password: hashSync(req.body.password, 10),
         role: req.body.role,
@@ -62,7 +61,7 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
+  UserModel.findOne({ email: req.body.email }).then((user) => {
     //No user found
     if (!user) {
       return res.status(401).send({
@@ -80,12 +79,13 @@ app.post('/login', (req, res) => {
     }
 
     const payload = {
+      // email: user.email,
+      // id: user._id
       id: user._id,
       email: user.email,
       role: user.role,
     }
 
-    //User found and password is correct
     const token = jwt.sign(payload, 'Random string', { expiresIn: '1d' })
 
     return res.status(200).send({
