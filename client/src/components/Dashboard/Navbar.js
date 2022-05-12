@@ -1,5 +1,6 @@
 import { Box, Button, Stack } from '@mui/material'
 import React from 'react'
+import { timedLogout } from '../../utils/timedLogout'
 
 const Navbar = () => {
   return (
@@ -19,7 +20,7 @@ const Navbar = () => {
           variant="contained"
           sx={{ fontWeight: 'bold', background: '#5CB85F' }}
           onClick={() => {
-            console.log('Button clicked')
+            timedLogout()
           }}
         >
           Logout

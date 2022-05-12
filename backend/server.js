@@ -3,9 +3,12 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync } = require('bcrypt')
-const UserModel = require('./database')
+const UserModel = require('./config/database')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
+const cookieSession = require('cookie-session')
+const authRoute = require('./routes/auth')
+const mongoose = require('mongoose')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -18,7 +21,7 @@ app.use(
 )
 app.use(passport.initialize())
 
-require('./passport')
+require('./config/passport')
 
 app.post('/register', (req, res) => {
   UserModel.findOne({ email: req.body.email }).then((user) => {
@@ -43,7 +46,7 @@ app.post('/register', (req, res) => {
             success: true,
             message: 'User created successfully.',
             user: {
-              id: user._id,
+              _id: mongoose.Types.ObjectId(user._id),
               email: user.email,
               role: user.role,
             },
@@ -62,7 +65,7 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
   UserModel.findOne({ email: req.body.email }).then((user) => {
-    //No user found
+    // No user found
     if (!user) {
       return res.status(401).send({
         success: false,
@@ -70,7 +73,7 @@ app.post('/login', (req, res) => {
       })
     }
 
-    //Incorrect password
+    // Incorrect password
     if (!compareSync(req.body.password, user.password)) {
       return res.status(401).send({
         success: false,
@@ -78,19 +81,20 @@ app.post('/login', (req, res) => {
       })
     }
 
+    // User found and password is correct
+    // Configure JWT payload
     const payload = {
-      // email: user.email,
-      // id: user._id
-      id: user._id,
+      _id: user._id,
       email: user.email,
       role: user.role,
     }
-
+    // Sign JWT token with given payload
     const token = jwt.sign(payload, 'Random string', { expiresIn: '1d' })
 
     return res.status(200).send({
       success: true,
       message: 'Logged in successfully!',
+      _id: user._id,
       token: 'Bearer ' + token,
       role: user.role,
     })
@@ -101,17 +105,15 @@ app.get('/protected', passport.authenticate('jwt', { session: false }), (req, re
   return res.status(200).send({
     success: true,
     user: {
-      id: req.user._id,
+      _id: req.user._id,
       email: req.user.email,
+      role: req.user.role,
     },
   })
 })
 
 const port = process.env.PORT
 app.listen(port, () => console.log('Listening to port ' + port))
-
-const cookieSession = require('cookie-session')
-const authRoute = require('./routes/auth')
 
 // COOKIE MIDDLEWARE SETUP
 // set cookie-session

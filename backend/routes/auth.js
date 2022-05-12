@@ -24,11 +24,23 @@ router.get('/logout', (req, res) => {
   res.redirect(process.env.CLIENT_URL + '/login')
 })
 
+// Google callback url
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 
 router.get(
   '/google/callback',
   passport.authenticate('google', {
+    successRedirect: process.env.CLIENT_URL + '/main',
+    failureRedirect: '/login/failed',
+  })
+)
+
+// Github callback url
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }))
+
+router.get(
+  '/github/callback',
+  passport.authenticate('github', {
     successRedirect: process.env.CLIENT_URL + '/main',
     failureRedirect: '/login/failed',
   })

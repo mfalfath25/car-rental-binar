@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, Link, Stack } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +7,6 @@ import { FaGithub } from 'react-icons/fa'
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const timer = useRef()
   const BaseURL = 'http://localhost:5000'
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({
@@ -20,17 +19,26 @@ const LoginForm = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     axios
-      .get('http://localhost:5000/protected', {
+      .get(`${BaseURL}/protected`, {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
         console.log(res)
+        if (!loading) {
+          setLoading(true)
+          setMessage({ info: 'Login Successful', type: 'success' })
+        }
         navigate('/protected')
       })
       .catch((err) => {
         console.log(err)
+        setLoading(false)
+        setMessage({
+          info: 'Invalid credentials: Wrong Password',
+          type: 'warning',
+        })
         navigate('/login')
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +48,7 @@ const LoginForm = () => {
     e.preventDefault()
     console.log(email, password)
     await axios
-      .post('http://localhost:5000/login', { email, password })
+      .post(`${BaseURL}/login`, { email, password })
       .then((user) => {
         console.log(user)
         localStorage.setItem('token', user.data.token)
@@ -53,6 +61,10 @@ const LoginForm = () => {
 
   const googleAuth = () => {
     window.open('http://localhost:5000/auth/google', '_self')
+  }
+
+  const githubAuth = () => {
+    window.open('http://localhost:5000/auth/github', '_self')
   }
 
   return (
@@ -125,7 +137,7 @@ const LoginForm = () => {
         <Button variant="outlined" startIcon={<FcGoogle />} onClick={googleAuth}>
           Sign In with Google
         </Button>
-        <Button variant="outlined" startIcon={<FaGithub />}>
+        <Button variant="outlined" startIcon={<FaGithub />} onClick={githubAuth}>
           Sign In with Github
         </Button>
       </Stack>
