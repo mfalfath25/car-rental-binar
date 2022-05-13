@@ -7,8 +7,9 @@ import Footer from '../components/Layout/Footer'
 import SearchFilter from '../components/Layout/SearchFilter'
 
 const MainPage = () => {
+  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState('')
-  console.log('search data: ', data)
+  // console.log('search data: ', data)
 
   return (
     <>

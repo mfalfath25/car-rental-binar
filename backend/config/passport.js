@@ -5,6 +5,9 @@ const opts = {}
 const UserModel = require('./database')
 const passport = require('passport')
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GitHubStrategy = require('passport-github2').Strategy
+
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 opts.secretOrKey = 'Random string'
 
@@ -25,8 +28,6 @@ passport.use(
 
 // GOOGLE STRATEGY
 // initialize GoogleStrategy passport
-const GoogleStrategy = require('passport-google-oauth20').Strategy
-
 passport.use(
   new GoogleStrategy(
     {
@@ -42,8 +43,6 @@ passport.use(
 
 // GITHUB STRATEGY
 // initialize GithubStrategy passport
-const GitHubStrategy = require('passport-github2').Strategy
-
 passport.use(
   new GitHubStrategy(
     {
@@ -51,10 +50,8 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: '/auth/github/callback',
     },
-    function (accessToken, refreshToken, profile, done) {
-      UserModel.find({ githubId: profile.id }, function (err, user) {
-        return done(err, user)
-      })
+    function (accessToken, refreshToken, profile, cb) {
+      cb(null, profile)
     }
   )
 )

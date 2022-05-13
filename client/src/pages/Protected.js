@@ -15,7 +15,7 @@ const Protected = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.data.user)
+        // console.log(res.data.user)
         props.saveUser(res.data.user)
         if (res.data.user.role === 'user') {
           navigate('/main')

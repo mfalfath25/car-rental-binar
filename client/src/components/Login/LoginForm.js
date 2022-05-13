@@ -25,11 +25,11 @@ const LoginForm = () => {
         },
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         navigate('/protected')
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         navigate('/login')
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps

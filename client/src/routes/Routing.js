@@ -39,7 +39,7 @@ const Routing = () => {
     getUser()
   }, [])
 
-  console.log('Storage data: ', user)
+  console.log('STATE USER: ', user)
 
   return (
     <BrowserRouter>
