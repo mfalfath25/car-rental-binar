@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { Box } from '@mui/material';
-import ContentXl from '../components/Layout/ContentXl';
-import Navbar from '../components/Layout/Navbar';
-import Hero from '../components/Main/Hero';
-import Footer from '../components/Layout/Footer';
-import SearchFilter from '../components/Layout/SearchFilter';
+import React, { useState } from 'react'
+import { Box } from '@mui/material'
+import ContentXl from '../components/Layout/ContentXl'
+import Navbar from '../components/Layout/Navbar'
+import Hero from '../components/Main/Hero'
+import Footer from '../components/Layout/Footer'
+import SearchFilter from '../components/Layout/SearchFilter'
 
 const MainPage = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState('')
+  console.log('search data: ', data)
 
   return (
     <>
@@ -25,7 +26,7 @@ const MainPage = () => {
         <Footer />
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default MainPage;
+export default MainPage
