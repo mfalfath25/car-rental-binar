@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, Link, Stack } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { FormControl, OutlinedInput, Button, Typography, Alert, Box, Link, Stack, LinearProgress } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
@@ -7,7 +7,6 @@ import { FaGithub } from 'react-icons/fa'
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const timer = useRef()
   const BaseURL = 'http://localhost:5000'
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({
@@ -20,17 +19,17 @@ const LoginForm = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     axios
-      .get('http://localhost:5000/protected', {
+      .get(`${BaseURL}/protected`, {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         navigate('/protected')
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         navigate('/login')
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,14 +39,32 @@ const LoginForm = () => {
     e.preventDefault()
     console.log(email, password)
     await axios
-      .post('http://localhost:5000/login', { email, password })
+      .post(`${BaseURL}/login`, { email, password })
       .then((user) => {
         console.log(user)
-        localStorage.setItem('token', user.data.token)
-        navigate('/protected')
+        if (!loading) {
+          setLoading(true)
+          setTimeout(() => {
+            setMessage({ info: 'Login Successful: 200 Success', type: 'success' })
+          }, 1000)
+          setTimeout(() => {
+            localStorage.setItem('token', user.data.token)
+            navigate('/protected')
+          }, 2000)
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log('CATCH:', err)
+        if (err.response.status === 401) {
+          setLoading(true)
+          setTimeout(() => {
+            setLoading(false)
+            setMessage({
+              info: 'Invalid credentials: 401 Unauthorized',
+              type: 'warning',
+            })
+          }, 1000)
+        }
       })
   }
 
@@ -55,10 +72,20 @@ const LoginForm = () => {
     window.open('http://localhost:5000/auth/google', '_self')
   }
 
+  const githubAuth = () => {
+    window.open('http://localhost:5000/auth/github', '_self')
+  }
+
   return (
     <div className="LoginForm">
       {message.type ? (
-        <Alert severity={message.type} sx={{ mb: 2 }}>
+        <Alert
+          severity={message.type}
+          sx={{ mb: 2 }}
+          onClose={() => {
+            setMessage({ info: '', type: '' })
+          }}
+        >
           {message.info}
         </Alert>
       ) : null}
@@ -106,13 +133,13 @@ const LoginForm = () => {
             Sign In
           </Button>
           {loading && (
-            <CircularProgress
+            <LinearProgress
               size={24}
               sx={{
                 color: '#1a90ff',
                 position: 'absolute',
-                top: '50%',
-                left: '48%',
+                width: '100%',
+                bottom: '0',
               }}
             />
           )}
@@ -125,7 +152,7 @@ const LoginForm = () => {
         <Button variant="outlined" startIcon={<FcGoogle />} onClick={googleAuth}>
           Sign In with Google
         </Button>
-        <Button variant="outlined" startIcon={<FaGithub />}>
+        <Button variant="outlined" startIcon={<FaGithub />} onClick={githubAuth}>
           Sign In with Github
         </Button>
       </Stack>

@@ -11,11 +11,6 @@ import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
-// function PrivateRoute({ children }) {
-//   const auth = localStorage.getItem('user');
-//   return auth !== null ? children : <Navigate to="/login" />;
-// }
-
 export const Data = createContext()
 
 const Routing = () => {
@@ -33,7 +28,7 @@ const Routing = () => {
           },
         })
         .then((res) => {
-          setUser(res.data.user)
+          setUser(res.data)
         })
     } catch (err) {
       console.log(err)
@@ -44,17 +39,16 @@ const Routing = () => {
     getUser()
   }, [])
 
-  // console.log('user data: ', user)
+  console.log('STATE USER: ', user)
 
   return (
     <BrowserRouter>
       <Data.Provider value={{ user }}>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          {/* <Route path="/login" element={user ? <Navigate to="/main" /> : <LoginPage />} /> */}
+          <Route path="/login" element={user ? <MainPage /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/protected" element={<Protected />} />
+          <Route path="/protected" element={<Protected saveUser={(user) => setUser(user)} />} />
           {user ? (
             <>
               <Route path="/dashboard" element={<DashboardPage />} />

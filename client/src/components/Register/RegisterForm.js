@@ -1,17 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  FormControl,
-  OutlinedInput,
-  Button,
-  Typography,
-  Alert,
-  CircularProgress,
-  Box,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Stack,
-} from '@mui/material'
+import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, FormControlLabel, Checkbox, Link, Stack } from '@mui/material'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
 import axios from 'axios'
@@ -70,29 +58,22 @@ const RegisterForm = () => {
       data.set('password', String(dataCustomer.password))
       data.delete('role')
     }
-    console.log(
-      'FormData: has admin role? ',
-      data.has('role'),
-      'post to:',
-      isAdmin
-    )
+    console.log('FormData: has admin role? ', data.has('role'), 'post to:', isAdmin)
     try {
-      await axios
-        .post(`${baseURL}/${isAdmin}/auth/register`, data)
-        .then((res) => {
-          if (res.status === 201) {
-            if (!loading) {
-              setLoading(true)
-              timer.current = setTimeout(() => {
-                setMessage({ info: 'Register Successful', type: 'success' })
-              }, 1000)
-              timer.current = setTimeout(() => {
-                setLoading(false)
-                navigate('/login')
-              }, 2000)
-            }
+      await axios.post(`${baseURL}/${isAdmin}/auth/register`, data).then((res) => {
+        if (res.status === 201) {
+          if (!loading) {
+            setLoading(true)
+            timer.current = setTimeout(() => {
+              setMessage({ info: 'Register Successful', type: 'success' })
+            }, 1000)
+            timer.current = setTimeout(() => {
+              setLoading(false)
+              navigate('/login')
+            }, 2000)
           }
-        })
+        }
+      })
     } catch (error) {
       // console.log(error)
       if (error.response.status === 400) {
@@ -141,15 +122,7 @@ const RegisterForm = () => {
           <Typography variant="h6" sx={{ pt: 2 }}>
             Password
           </Typography>
-          <OutlinedInput
-            id="pass-input"
-            type="password"
-            name="password"
-            placeholder="6+ Karakter"
-            size="small"
-            onChange={handleChange}
-            required={true}
-          />
+          <OutlinedInput id="pass-input" type="password" name="password" placeholder="6+ Karakter" size="small" onChange={handleChange} required={true} />
         </FormControl>
         <FormControl fullWidth>
           <FormControlLabel
@@ -157,9 +130,7 @@ const RegisterForm = () => {
             variant="h6"
             label="Register as Admin"
             labelPlacement="start"
-            control={
-              <Checkbox checked={registerAsAdmin} onChange={handleToggle} />
-            }
+            control={<Checkbox checked={registerAsAdmin} onChange={handleToggle} />}
           />
         </FormControl>
         <Box sx={{ position: 'relative' }}>
@@ -193,12 +164,12 @@ const RegisterForm = () => {
         <Link href="login" underline="hover">
           {'Already have an account? Login'}
         </Link>
-        <Button variant="outlined" startIcon={<FcGoogle />}>
+        {/* <Button variant="outlined" startIcon={<FcGoogle />}>
           Sign Up with Google
         </Button>
         <Button variant="outlined" startIcon={<FaGithub />}>
           Sign Up with Github
-        </Button>
+        </Button> */}
       </Stack>
     </div>
   )
