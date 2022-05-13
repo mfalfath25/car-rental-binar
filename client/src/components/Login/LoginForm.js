@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, Link, Stack } from '@mui/material'
+import { FormControl, OutlinedInput, Button, Typography, Alert, Box, Link, Stack, LinearProgress } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
@@ -26,19 +26,10 @@ const LoginForm = () => {
       })
       .then((res) => {
         console.log(res)
-        if (!loading) {
-          setLoading(true)
-          setMessage({ info: 'Login Successful', type: 'success' })
-        }
         navigate('/protected')
       })
       .catch((err) => {
         console.log(err)
-        setLoading(false)
-        setMessage({
-          info: 'Invalid credentials: Wrong Password',
-          type: 'warning',
-        })
         navigate('/login')
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,11 +42,29 @@ const LoginForm = () => {
       .post(`${BaseURL}/login`, { email, password })
       .then((user) => {
         console.log(user)
-        localStorage.setItem('token', user.data.token)
-        navigate('/protected')
+        if (!loading) {
+          setLoading(true)
+          setTimeout(() => {
+            setMessage({ info: 'Login Successful: 200 Success', type: 'success' })
+          }, 1000)
+          setTimeout(() => {
+            localStorage.setItem('token', user.data.token)
+            navigate('/protected')
+          }, 2000)
+        }
       })
       .catch((err) => {
-        console.log(err)
+        console.log('CATCH:', err)
+        if (err.response.status === 401) {
+          setLoading(true)
+          setTimeout(() => {
+            setLoading(false)
+            setMessage({
+              info: 'Invalid credentials: 401 Unauthorized',
+              type: 'warning',
+            })
+          }, 1000)
+        }
       })
   }
 
@@ -70,7 +79,13 @@ const LoginForm = () => {
   return (
     <div className="LoginForm">
       {message.type ? (
-        <Alert severity={message.type} sx={{ mb: 2 }}>
+        <Alert
+          severity={message.type}
+          sx={{ mb: 2 }}
+          onClose={() => {
+            setMessage({ info: '', type: '' })
+          }}
+        >
           {message.info}
         </Alert>
       ) : null}
@@ -118,13 +133,13 @@ const LoginForm = () => {
             Sign In
           </Button>
           {loading && (
-            <CircularProgress
+            <LinearProgress
               size={24}
               sx={{
                 color: '#1a90ff',
                 position: 'absolute',
-                top: '50%',
-                left: '48%',
+                width: '100%',
+                bottom: '0',
               }}
             />
           )}
