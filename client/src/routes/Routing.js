@@ -37,6 +37,7 @@ const Routing = () => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   console.log('STATE USER: ', user)
@@ -45,8 +46,7 @@ const Routing = () => {
     <BrowserRouter>
       <Data.Provider value={{ user }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={user ? <MainPage /> : <LoginPage />} />
+          <Route path="/login" element={user ? <Navigate to={'/main'} /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/protected" element={<Protected saveUser={(user) => setUser(user)} />} />
           {user ? (
