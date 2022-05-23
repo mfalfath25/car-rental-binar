@@ -3,7 +3,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync, hash } = require('bcrypt')
-const UserModel = require('./config/database')
+// const UserModel = require('./config/database')
+const User = require('./models/user')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
@@ -23,8 +24,8 @@ app.use(passport.initialize())
 
 require('./config/passport')
 
-app.post('/register', (req, res) => {
-  UserModel.findOne({ email: req.body.email }).then((user) => {
+app.post('/register', async (req, res) => {
+  await User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       // handle case where user already exists
       return res.status(401).send({
@@ -33,7 +34,7 @@ app.post('/register', (req, res) => {
       })
     } else {
       // handle case where user doesn't exist yet
-      const user = new UserModel({
+      const user = new User({
         email: req.body.email,
         password: hashSync(req.body.password, 10),
         role: req.body.role,
@@ -63,8 +64,8 @@ app.post('/register', (req, res) => {
   })
 })
 
-app.post('/login', (req, res) => {
-  UserModel.findOne({ email: req.body.email }).then((user) => {
+app.post('/login', async (req, res) => {
+  await User.findOne({ email: req.body.email }).then((user) => {
     // No user found
     if (!user) {
       return res.status(401).send({
