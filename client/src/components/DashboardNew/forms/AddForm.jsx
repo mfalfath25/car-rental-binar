@@ -49,7 +49,6 @@ const AddForm = () => {
           <div>
             <TextField
               label={<FiUpload />}
-              shrink={false}
               variant="outlined"
               size="small"
               sx={{ minWidth: '400px' }}

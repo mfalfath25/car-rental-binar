@@ -48,15 +48,15 @@ const Routing = () => {
     <BrowserRouter>
       <Data.Provider value={{ user }}>
         <Routes>
-          <Route path="/dashboard" element={<Home />} />
-          <Route path="/cars" element={<Cars />} />
-          <Route path="/cars/add-new" element={<Cars />} />
           <Route path="/login" element={user ? <Navigate to={'/main'} /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/protected" element={<Protected saveUser={(user) => setUser(user)} />} />
           {user ? (
             <>
               {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+              <Route path="/dashboard" element={<Home />} />
+              <Route path="/cars" element={<Cars />} />
+              <Route path="/cars/add-new" element={<Cars />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/main/search" element={<SearchPage />} />
               <Route path="/main/search/detail/:id" element={<DetailPage />} />
