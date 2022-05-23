@@ -13,7 +13,7 @@ export const Theme = createTheme({
   //   },
   // },
   typography: {
-    fontFamily: `"Helvetica", "Arial", sans-serif`,
+    fontFamily: `'Plus Jakarta Sans', 'Helvetica', 'Arial', sans-serif`,
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
