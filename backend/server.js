@@ -3,12 +3,12 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const { hashSync, compareSync, hash } = require('bcrypt')
-// const UserModel = require('./config/database')
 const User = require('./models/user')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 const authRoute = require('./routes/auth')
+const carRoute = require('./routes/car')
 const mongoose = require('mongoose')
 
 app.use(express.json())
@@ -121,5 +121,8 @@ app.listen(port, () => console.log('Listening to port ' + port))
 app.use(cookieSession({ name: 'session', keys: ['key1'], maxAge: 24 * 60 * 60 * 100 }))
 app.use(passport.session())
 
-// set router
+// set router for auth
 app.use('/auth', authRoute)
+
+// set router for car model
+app.use('/car', carRoute)

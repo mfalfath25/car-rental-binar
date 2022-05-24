@@ -5,10 +5,11 @@ const carSchema = new Schema(
   {
     name: String,
     type: String,
-    price: Number,
+    price: String,
     model: String,
+    image: String,
     description: String,
-    passenger: Number,
+    passenger: String,
     startRent: Date,
     finishRent: Date,
   },

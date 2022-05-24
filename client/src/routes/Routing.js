@@ -42,7 +42,7 @@ const Routing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('STATE USER: ', user)
+  // console.log('STATE USER: ', user)
 
   return (
     <BrowserRouter>
