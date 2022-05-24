@@ -6,7 +6,7 @@ const SidebarExtend = (props) => {
   return (
     <div className="sbe">
       <div className="top">
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
           <span className="logoBar"></span>
         </Link>
       </div>

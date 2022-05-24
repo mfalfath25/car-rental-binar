@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' })
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
@@ -65,14 +66,53 @@ router.post('/add', upload.single('image'), (req, res) => {
       res.send({
         success: true,
         message: 'Car document created successfully.',
+        info: 'Success, new car data added.',
+        type: 'success',
       })
+      // res.redirect(process.env.CLIENT_URL + '/dashboard/cars/add')
     })
     .catch((err) => {
-      res.status(400).send({
+      res.send({
         success: false,
         message: 'Error adding car.',
+        info: 'Error, unable to add car data.',
+        type: 'error',
       })
     })
+})
+
+// Update car data
+router.put('/edit/:id', upload.single('image'), (req, res) => {
+  Car.findByIdAndUpdate(req.params.id, req.body).then((car) => {
+    ;(car.name = req.body.name),
+      (car.type = req.body.type),
+      (car.price = req.body.price),
+      (car.model = req.body.model),
+      (car.image = req.file.originalname),
+      (car.description = req.body.description),
+      (car.passenger = req.body.passenger),
+      (car.startRent = req.body.startRent),
+      (car.finishRent = req.body.finishRent)
+
+    car
+      .save()
+      .then(() => {
+        res.send({
+          success: true,
+          message: 'Car document updated successfully.',
+          info: 'Success, car data updated.',
+          type: 'success',
+        })
+      })
+      .catch((err) => {
+        res.send({
+          success: false,
+          message: 'Error editing car.',
+          info: 'Error, unable to edit car data.',
+          type: 'error',
+        })
+      })
+  })
 })
 
 module.exports = router

@@ -3,6 +3,9 @@ import './carcard.scss'
 import { Button, Card, CardActions, CardContent, Typography, Stack, Modal } from '@mui/material'
 import { FiKey, FiClock, FiTrash, FiEdit } from 'react-icons/fi'
 import { Box } from '@mui/system'
+import { toRupiah } from '../../../utils/toRupiah'
+import { formatDate } from '../../../utils/formatDate'
+import { useNavigate } from 'react-router-dom'
 
 const style = {
   position: 'absolute',
@@ -15,37 +18,42 @@ const style = {
   p: 4,
 }
 
-const CarCard = () => {
+const CarCard = (props) => {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    setOpen(true)
+  }
   const handleClose = () => setOpen(false)
+
   return (
     <>
-      <Card variant="outlined" sx={{ maxWidth: 350, maxHeight: 480 }}>
+      <Card variant="outlined" sx={{ maxWidth: 350, minWidth: 285, maxHeight: 480 }}>
         <CardContent>
           <img
-            src="https://images.pexels.com/photos/1194713/pexels-photo-1194713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src={`/uploads/${props.car.image}`}
             alt=""
-            className="avatar"
             style={{ width: '100%', maxHeight: 240 }}
           />
           <Typography sx={{ fontWeight: 'bold', fontSize: 14, padding: '8px 0' }}>
-            Nama / Tipe Mobil
+            {props.car.name} / {props.car.type}
           </Typography>
           <Typography
             variant="body1"
             component="div"
             sx={{ fontWeight: 'bold', paddingBottom: '16px' }}
           >
-            Rp. 430.000 / hari
+            {toRupiah(props.car.price)} / hari
           </Typography>
           <Stack direction="row" spacing={1} alignItems={'center'} sx={{ paddingBottom: '8px' }}>
             <FiKey size={16} color={'#8A8A8A'} />
-            <Typography variant="body2">Start rent - Finish Rent</Typography>
+            <Typography variant="body2">
+              {formatDate(props.car.startRent)} - {formatDate(props.car.finishRent)}
+            </Typography>
           </Stack>
           <Stack direction="row" spacing={1} alignItems={'center'}>
             <FiClock size={16} color={'#8A8A8A'} />
-            <Typography variant="body2">Updated at 4 Apr 2022, 09.00</Typography>
+            <Typography variant="body2">Updated at {formatDate(props.car.updatedAt)}</Typography>
           </Stack>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>
@@ -74,9 +82,9 @@ const CarCard = () => {
                 startIcon={<FiEdit />}
                 color="success"
                 sx={{ background: '#5CB85F', textTransform: 'none', fontWeight: 'bold' }}
-                // onClick={() => {
-                //   navigate('/cars/add-new')
-                // }}
+                onClick={() => {
+                  navigate(`/dashboard/cars/edit/${props.car._id}`)
+                }}
               >
                 Edit
               </Button>
@@ -117,7 +125,8 @@ const CarCard = () => {
                 variant="body2"
                 sx={{ mt: 2, textAlign: 'center' }}
               >
-                Setelah dihapus, data mobil tidak dapat dikembalikan. Yakin ingin menghapus?
+                Setelah dihapus, data mobil tidak dapat dikembalikan. Yakin ingin menghapus data{' '}
+                {props.car._id}?
               </Typography>
               <Stack direction="row" spacing={2}>
                 <Button

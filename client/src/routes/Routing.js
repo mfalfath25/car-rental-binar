@@ -6,7 +6,7 @@ import SearchPage from '../pages/SearchPage'
 import DetailPage from '../pages/DetailPage'
 import PaymentPage from '../pages/PaymentPage'
 import RegisterPage from '../pages/RegisterPage'
-import DashboardPage from '../pages/DashboardPage'
+// import DashboardPage from '../pages/DashboardPage'
 import Home from '../pages/dashboard/home/Home'
 import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
@@ -55,8 +55,9 @@ const Routing = () => {
             <>
               {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
               <Route path="/dashboard" element={<Home />} />
-              <Route path="/cars" element={<Cars />} />
-              <Route path="/cars/add-new" element={<Cars />} />
+              <Route path="/dashboard/cars" element={<Cars />} />
+              <Route path="/dashboard/cars/edit/:id" element={<Cars />} />
+              <Route path="/dashboard/cars/add-new" element={<Cars />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/main/search" element={<SearchPage />} />
               <Route path="/main/search/detail/:id" element={<DetailPage />} />

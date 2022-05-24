@@ -1,38 +1,55 @@
 import './datatable.scss'
 import { DataGrid } from '@mui/x-data-grid'
 import { userColumns, userRows } from '../../../apis/dashboard/dummydata'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
+import axios from 'axios'
 
 const Datatable = (props) => {
-  const [data, setData] = useState(userRows)
+  // const [data, setData] = useState(userRows)
+  const [data, setData] = useState([])
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id))
   }
-  // console.log(userRows)
-  const actionColumn = [
-    {
-      field: 'action',
-      headerName: 'Action',
-      headerClassName: 'style-header',
-      width: 140,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: 'none' }}>
-              <div className="viewButton">View</div>
-            </Link>
-            <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
-              Delete
-            </div>
-          </div>
-        )
-      },
-    },
-  ]
+
+  const fetchData = async () => {
+    await axios
+      .get('http://localhost:5000/car')
+      .then((res) => {
+        setData(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  // const actionColumn = [
+  //   {
+  //     field: 'action',
+  //     headerName: 'Action',
+  //     headerClassName: 'style-header',
+  //     width: 140,
+  //     renderCell: (params) => {
+  //       return (
+  //         <div className="cellAction">
+  //           <Link to="/users/test" style={{ textDecoration: 'none' }}>
+  //             <div className="viewButton">View</div>
+  //           </Link>
+  //           <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
+  //             Delete
+  //           </div>
+  //         </div>
+  //       )
+  //     },
+  //   },
+  // ]
+
   return (
     <>
       <div className="datatable">
@@ -61,6 +78,7 @@ const Datatable = (props) => {
             className="datagrid"
             rows={data}
             columns={userColumns}
+            getRowId={(row) => row._id}
             // columns={userColumns.concat(actionColumn)}
             pageSize={10}
             rowsPerPageOptions={[10]}
