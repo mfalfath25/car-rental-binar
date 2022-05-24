@@ -164,7 +164,7 @@ const AddForm = () => {
             Foto
           </Typography>
           <div>
-            <input onChange={handleFile} type="file" filename="image" name="image" />
+            <input required onChange={handleFile} type="file" filename="image" name="image" />
             <FormHelperText id="component-helper-text">File size max. 2MB</FormHelperText>
           </div>
         </Item>
@@ -199,7 +199,7 @@ const AddForm = () => {
             disableElevation
             sx={{ textTransform: 'none', fontWeight: 'bold' }}
             onClick={() => {
-              navigate('/cars')
+              navigate('/dashboard/cars')
             }}
           >
             Cancel

@@ -5,7 +5,7 @@ import Navbar from '../../../components/DashboardNew/navbar/Navbar'
 import Sidebar from '../../../components/DashboardNew/sidebar/Sidebar'
 import SidebarExtend from '../../../components/DashboardNew/sidebar/SidebarExtend'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Box, Button, ButtonGroup, Grid, Stack } from '@mui/material'
+import { Alert, Box, Button, ButtonGroup, Grid, Stack } from '@mui/material'
 import { FiPlus } from 'react-icons/fi'
 import CarCard from '../../../components/DashboardNew/cards/CarCard'
 import AddForm from '../../../components/DashboardNew/forms/AddForm'
@@ -19,6 +19,11 @@ const Cars = () => {
   const { pathname } = location
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const [cars, setCars] = useState([])
+  const [deleted, setDeleted] = useState(false)
+  const [message, setMessage] = useState({
+    info: '',
+    type: '',
+  })
 
   const handlePath = (path) => {
     switch (path) {
@@ -72,13 +77,20 @@ const Cars = () => {
       })
   }
 
+  // deleted === true? fetchData() : null
+
   useEffect(() => {
     handlePath(pathname)
     fetchData()
+    // setMessage({ info: 'Hai', type: 'success' })
+    // console.log(cars)
   }, [pathname])
 
   // console.log('PATH now: ', pathname)
   // console.log('PATH :id: ', id)
+  console.log(pathname)
+  // console.log(cars)
+  console.log('TRUE GAK?', deleted)
 
   return (
     <div className="cars">
@@ -89,6 +101,17 @@ const Cars = () => {
         {pathname === '/dashboard/cars' ? (
           <>
             <Breadcrumb breadcrumbs={breadcrumbs} title={'List Car'} />
+            {message.type ? (
+              <Alert
+                severity={message.type}
+                sx={{ mx: 2, maxWidth: '524px' }}
+                onClose={() => {
+                  setMessage({ info: '', type: '' })
+                }}
+              >
+                {message.info}
+              </Alert>
+            ) : null}
             <Stack direction="row" padding={2} sx={{ justifyContent: 'space-between' }}>
               <Stack>
                 <ButtonGroup variant="outlined" aria-label="outlined button group">
@@ -113,7 +136,11 @@ const Cars = () => {
               <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
                 {cars?.map((cars, id) => (
                   <Grid item xs={6} lg={4} xl={3} key={id}>
-                    <CarCard car={cars} />
+                    <CarCard
+                      car={cars}
+                      alertMessage={message}
+                      deletes={(deleted) => setDeleted(deleted)}
+                    />
                   </Grid>
                 ))}
               </Grid>

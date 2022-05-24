@@ -6,6 +6,7 @@ import { Box } from '@mui/system'
 import { toRupiah } from '../../../utils/toRupiah'
 import { formatDate } from '../../../utils/formatDate'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const style = {
   position: 'absolute',
@@ -24,7 +25,17 @@ const CarCard = (props) => {
   const handleOpen = () => {
     setOpen(true)
   }
+  // console.log(props.alertMessage)
   const handleClose = () => setOpen(false)
+
+  const handleDelete = () => {
+    axios.delete(`http://localhost:5000/car/delete/${props.car._id}`).then((res) => {
+      console.log(res)
+      props.deletes(true)
+      handleClose()
+      // window.location.reload()
+    })
+  }
 
   return (
     <>
@@ -132,6 +143,8 @@ const CarCard = (props) => {
                 <Button
                   variant="contained"
                   size="large"
+                  // type="submit"
+                  onClick={handleDelete}
                   disableElevation
                   sx={{ textTransform: 'none', fontWeight: 'bold' }}
                 >

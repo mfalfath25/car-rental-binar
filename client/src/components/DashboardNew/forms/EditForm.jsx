@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Alert,
   Button,
@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-// import { FiUpload } from 'react-icons/fi'
+import moment from 'moment'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
@@ -66,6 +66,22 @@ const EditForm = (props) => {
       })
   }
 
+  const fetchSpecificCar = async () => {
+    await axios
+      .get(`http://localhost:5000/car/${id}`)
+      .then((res) => {
+        setCar(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    fetchSpecificCar()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <form onSubmit={handleSubmit} encType="multipart/form-data">
       {message.type ? (
@@ -86,6 +102,7 @@ const EditForm = (props) => {
           </Typography>
           <TextField
             onChange={handleChange}
+            placeholder={car.name}
             name="name"
             variant="outlined"
             size="small"
@@ -126,6 +143,7 @@ const EditForm = (props) => {
             Penumpang
           </Typography>
           <TextField
+            placeholder={Number(car.passenger) || 0}
             onChange={handleChange}
             name="passenger"
             variant="outlined"
@@ -139,6 +157,7 @@ const EditForm = (props) => {
             Harga
           </Typography>
           <TextField
+            placeholder={Number(car.price) || 0}
             onChange={handleChange}
             name="price"
             variant="outlined"
@@ -153,6 +172,7 @@ const EditForm = (props) => {
           </Typography>
           <TextField
             multiline
+            placeholder={car.description}
             onChange={handleChange}
             name="description"
             variant="outlined"
@@ -165,7 +185,14 @@ const EditForm = (props) => {
             Foto
           </Typography>
           <div>
-            <input onChange={handleFile} type="file" filename="image" name="image" />
+            <input
+              // placeholder={car.image} // not working lol
+              required
+              onChange={handleFile}
+              type="file"
+              filename="image"
+              name="image"
+            />
             <FormHelperText id="component-helper-text">File size max. 2MB</FormHelperText>
           </div>
         </Item>
@@ -173,25 +200,41 @@ const EditForm = (props) => {
           <Typography variant="body1" sx={{ minWidth: '140px', pr: '16px' }}>
             Start Rent
           </Typography>
-          <input onChange={handleChange} type="date" name="startRent" id="date" />
+          <input
+            value={moment(car.startRent).format('YYYY-MM-DD')}
+            required
+            onChange={handleChange}
+            data-date-format="yyyy-mm-dd"
+            type="date"
+            name="startRent"
+            id="date"
+          />
         </Item>
         <Item sx={{ mb: 3 }}>
           <Typography variant="body1" sx={{ minWidth: '140px', pr: '16px' }}>
             Finish Rent
           </Typography>
-          <input onChange={handleChange} type="date" name="finishRent" id="date" />
+          <input
+            value={moment(car.finishRent).format('YYYY-MM-DD')}
+            required
+            onChange={handleChange}
+            data-date-format="yyyy-mm-dd"
+            type="date"
+            name="finishRent"
+            id="date"
+          />
         </Item>
         <Item sx={{ mb: 3 }}>
           <Typography variant="body1" sx={{ minWidth: '140px', pr: '16px' }}>
             Created At
           </Typography>
-          <Typography variant="body1">-</Typography>
+          <Typography variant="body1">{car.createdAt}</Typography>
         </Item>
         <Item sx={{ mb: 3 }}>
           <Typography variant="body1" sx={{ minWidth: '140px', pr: '16px' }}>
             Updated At
           </Typography>
-          <Typography variant="body1">-</Typography>
+          <Typography variant="body1">{car.updatedAt}</Typography>
         </Item>
         <Stack direction="row" spacing={2}>
           <Button
@@ -200,7 +243,7 @@ const EditForm = (props) => {
             disableElevation
             sx={{ textTransform: 'none', fontWeight: 'bold' }}
             onClick={() => {
-              navigate('/cars')
+              navigate('/dashboard/cars')
             }}
           >
             Cancel
