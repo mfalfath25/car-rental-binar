@@ -32,6 +32,7 @@ const CarCard = (props) => {
     axios.delete(`http://localhost:5000/car/delete/${props.car._id}`).then((res) => {
       console.log(res)
       props.deletes(true)
+      props.setCars((items) => items.filter((item) => item._id !== props.car._id))
       handleClose()
       // window.location.reload()
     })
@@ -79,9 +80,6 @@ const CarCard = (props) => {
                 color="error"
                 sx={{ color: '#FA2C5A', textTransform: 'none', fontWeight: 'bold' }}
                 onClick={handleOpen}
-                // onClick={() => {
-                //   navigate('/cars/add-new')
-                // }}
               >
                 Delete
               </Button>

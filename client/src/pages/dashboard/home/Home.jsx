@@ -4,6 +4,7 @@ import SidebarExtend from '../../../components/DashboardNew/sidebar/SidebarExten
 import Navbar from '../../../components/DashboardNew/navbar/Navbar'
 import Breadcrumb from '../../../components/DashboardNew/breadcrumb/Breadcrumb'
 import Datatable from '../../../components/DashboardNew/datatable/Datatable'
+import DonutChart from '../../../components/DashboardNew/charts/DonutChart'
 
 const Home = () => {
   const breadcrumbs = [
@@ -26,6 +27,7 @@ const Home = () => {
       <div className="homeContainer">
         <Navbar />
         <Breadcrumb breadcrumbs={breadcrumbs} title={'Dashboard'} />
+        <DonutChart />
         <Datatable />
       </div>
     </div>

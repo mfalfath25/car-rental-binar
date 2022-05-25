@@ -19,6 +19,7 @@ const Cars = () => {
   const { pathname } = location
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const [cars, setCars] = useState([])
+  const [count, setCount] = useState(0)
   const [deleted, setDeleted] = useState(false)
   const [message, setMessage] = useState({
     info: '',
@@ -137,6 +138,7 @@ const Cars = () => {
                   <Grid item xs={6} lg={4} xl={3} key={id}>
                     <CarCard
                       car={cars}
+                      setCars={setCars}
                       alertMessage={message}
                       deletes={(deleted) => setDeleted(deleted)}
                     />

@@ -60,7 +60,7 @@ const Datatable = (props) => {
         </Box>
         <Box
           sx={{
-            height: '100%',
+            height: '106%',
             width: 1,
             '.style-header': {
               backgroundColor: '#CFD4ED',
