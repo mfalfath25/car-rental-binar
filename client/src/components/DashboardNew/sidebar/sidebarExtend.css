@@ -1,0 +1,66 @@
+.sbe {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border-right: 0.5px solid #e6e3e3;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.sbe .top {
+  height: 64px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 10px;
+}
+
+.sbe .top .logoBar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100px;
+  height: 34px;
+  background-color: #cfd4ed;
+}
+
+.sbe hr {
+  height: 0;
+  border: 0.5px solid #e6e3e3;
+}
+
+.sbe-bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.sbe-bottom .sbe-title {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+  color: #999;
+  height: 64px;
+}
+
+.sbe-bottom .sbe-subtitle {
+  padding: 14px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  background-color: #cfd4ed;
+}
+/*# sourceMappingURL=sidebarExtend.css.map */

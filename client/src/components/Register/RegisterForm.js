@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, FormControlLabel, Checkbox, Link, Stack } from '@mui/material'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithub } from 'react-icons/fa'
@@ -7,95 +7,58 @@ import { useNavigate } from 'react-router-dom'
 
 const RegisterForm = () => {
   const navigate = useNavigate()
-  const timer = useRef()
-  const baseURL = 'https://rent-cars-api.herokuapp.com'
-  const [registerAsAdmin, setRegisterAsAdmin] = useState(false)
-  const [isAdmin, setIsAdmin] = useState('customer')
+  const baseURL = 'http://localhost:5000'
+  const [isAdmin, setIsAdmin] = useState('user')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({
     info: '',
     type: '',
   })
-  const [dataCustomer, setDataCustomer] = useState({
-    email: '',
-    password: '',
+  const [registerData, setRegisterData] = useState({
+    email: null,
+    password: null,
+    role: isAdmin,
   })
-  const [dataAdmin, setDataAdmin] = useState({
-    email: '',
-    password: '',
-    role: 'admin',
-  })
-
-  const handleToggle = (e) => {
-    setRegisterAsAdmin(e.target.checked ? true : false)
-    setIsAdmin(e.target.checked ? 'admin' : 'customer')
-  }
 
   const handleChange = (e) => {
     const value = e.target.value
-    if (registerAsAdmin === true) {
-      setDataAdmin({
-        ...dataAdmin,
-        [e.target.name]: value,
-      })
-    } else {
-      setDataCustomer({
-        ...dataCustomer,
-        [e.target.name]: value,
-      })
-    }
+    setRegisterData({ ...registerData, [e.target.name]: value })
   }
+
+  const handleToggle = () => {
+    isAdmin === 'user' ? setIsAdmin('admin') : setIsAdmin('user')
+    setRegisterData({ ...registerData, role: isAdmin === 'user' ? 'admin' : 'user' })
+  }
+
+  // console.log(isAdmin)
+  // console.log('Data register ', registerData)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = new FormData()
-    if (registerAsAdmin === true) {
-      data.set('email', String(dataAdmin.email))
-      data.set('password', String(dataAdmin.password))
-      data.set('role', String(dataAdmin.role))
+    if (Object.keys(registerData).length === 0) {
+      setMessage({ info: 'Please fill all the fields', type: 'warning' })
     } else {
-      data.set('email', String(dataCustomer.email))
-      data.set('password', String(dataCustomer.password))
-      data.delete('role')
-    }
-    console.log('FormData: has admin role? ', data.has('role'), 'post to:', isAdmin)
-    try {
-      await axios.post(`${baseURL}/${isAdmin}/auth/register`, data).then((res) => {
-        if (res.status === 201) {
+      await axios
+        .post(`${baseURL}/register`, { registerData })
+        .then((res) => {
+          console.log('submitting registration data: ', res)
           if (!loading) {
             setLoading(true)
-            timer.current = setTimeout(() => {
-              setMessage({ info: 'Register Successful', type: 'success' })
-            }, 1000)
-            timer.current = setTimeout(() => {
-              setLoading(false)
-              navigate('/login')
+            setTimeout(() => {
+              setMessage({ info: 'Registration Successful: 200 Success', type: 'success' })
             }, 2000)
+            setTimeout(() => {
+              navigate('/login')
+            }, 1000)
           }
-        }
-      })
-    } catch (error) {
-      // console.log(error)
-      if (error.response.status === 400) {
-        if (!loading) {
-          setLoading(true)
-          timer.current = setTimeout(() => {
-            setLoading(false)
-            setMessage({
-              info: 'Invalid format / Email already exist',
-              type: 'warning',
-            })
-          }, 2000)
-        }
-      }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer.current)
-    }
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <div className="RegisterForm">
@@ -130,7 +93,7 @@ const RegisterForm = () => {
             variant="h6"
             label="Register as Admin"
             labelPlacement="start"
-            control={<Checkbox checked={registerAsAdmin} onChange={handleToggle} />}
+            control={<Checkbox defaultChecked={false} onChange={handleToggle} />}
           />
         </FormControl>
         <Box sx={{ position: 'relative' }}>

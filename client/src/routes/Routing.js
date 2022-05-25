@@ -6,10 +6,12 @@ import SearchPage from '../pages/SearchPage'
 import DetailPage from '../pages/DetailPage'
 import PaymentPage from '../pages/PaymentPage'
 import RegisterPage from '../pages/RegisterPage'
-import DashboardPage from '../pages/DashboardPage'
+// import DashboardPage from '../pages/DashboardPage'
+import Home from '../pages/dashboard/home/Home'
 import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import Cars from '../pages/dashboard/cars/Cars'
 
 export const Data = createContext()
 
@@ -37,21 +39,25 @@ const Routing = () => {
 
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('STATE USER: ', user)
+  // console.log('STATE USER: ', user)
 
   return (
     <BrowserRouter>
       <Data.Provider value={{ user }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={user ? <MainPage /> : <LoginPage />} />
+          <Route path="/login" element={user ? <Navigate to={'/main'} /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/protected" element={<Protected saveUser={(user) => setUser(user)} />} />
           {user ? (
             <>
-              <Route path="/dashboard" element={<DashboardPage />} />
+              {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+              <Route path="/dashboard" element={<Home />} />
+              <Route path="/dashboard/cars" element={<Cars />} />
+              <Route path="/dashboard/cars/edit/:id" element={<Cars />} />
+              <Route path="/dashboard/cars/add-new" element={<Cars />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/main/search" element={<SearchPage />} />
               <Route path="/main/search/detail/:id" element={<DetailPage />} />
