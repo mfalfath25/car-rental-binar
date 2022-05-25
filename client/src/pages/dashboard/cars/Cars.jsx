@@ -77,8 +77,6 @@ const Cars = () => {
       })
   }
 
-  // deleted === true? fetchData() : null
-
   useEffect(() => {
     handlePath(pathname)
     fetchData()
@@ -86,11 +84,12 @@ const Cars = () => {
     // console.log(cars)
   }, [pathname])
 
+  // deleted === true? fetchData() : null
   // console.log('PATH now: ', pathname)
   // console.log('PATH :id: ', id)
-  console.log(pathname)
+  // console.log(pathname)
   // console.log(cars)
-  console.log('TRUE GAK?', deleted)
+  // console.log('Deleted?', deleted)
 
   return (
     <div className="cars">

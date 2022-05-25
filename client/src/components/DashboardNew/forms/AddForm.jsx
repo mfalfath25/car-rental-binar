@@ -46,6 +46,7 @@ const AddForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target
     setCar({ ...car, [name]: value })
+    console.log(car)
   }
 
   const handleSubmit = (e) => {

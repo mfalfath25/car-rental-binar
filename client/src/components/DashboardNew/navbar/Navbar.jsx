@@ -1,17 +1,6 @@
 import './navbar.scss'
 import React, { useContext } from 'react'
-import {
-  Avatar,
-  Box,
-  Button,
-  FormControl,
-  Input,
-  InputAdornment,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Avatar, Box, Button, Typography } from '@mui/material'
 import { FiMenu, FiSearch } from 'react-icons/fi'
 import { Data } from '../../../routes/Routing'
 import { timedLogout } from '../../../utils/timedLogout'
@@ -28,15 +17,6 @@ const Navbar = () => {
             <FiSearch size={16} />
             <input type="text" placeholder="Search" />
           </div>
-          {/* <div className="item">
-            <DarkModeOutlinedIcon className="icon" onClick={() => dispatch({ type: 'TOGGLE' })} />
-          </div> */}
-          {/* <div className="search" style={{ border: 'none' }}>
-            <TextField defaultValue="" size="small" />
-            <Button variant="outlined" onClick={() => {}}>
-              Search
-            </Button>
-          </div> */}
           <div className="item">
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <Avatar
@@ -57,12 +37,6 @@ const Navbar = () => {
                 Logout
               </Button>
             </Box>
-            {/* <img
-              src="https://images.pexels.com/photos/1194713/pexels-photo-1194713.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-              className="avatar"
-            />
-            <div className="username">benzworld</div> */}
           </div>
         </div>
       </div>

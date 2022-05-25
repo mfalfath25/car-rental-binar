@@ -1,13 +1,8 @@
 import './sidebar.scss'
-import { Link, useLocation } from 'react-router-dom'
-// import { DarkModeContext } from '../../context/darkModeContext'
-import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FiHome, FiTruck } from 'react-icons/fi'
 
 const Sidebar = () => {
-  // const { dispatch } = useContext(DarkModeContext)
-  const location = useLocation()
-
   return (
     <div className="sidebar">
       <div className="top">

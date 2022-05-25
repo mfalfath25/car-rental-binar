@@ -1,18 +1,17 @@
 import './datatable.scss'
 import { DataGrid } from '@mui/x-data-grid'
-import { userColumns, userRows } from '../../../apis/dashboard/dummydata'
+import { userColumns } from '../../../apis/dashboard/dummydata'
 import { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
 import axios from 'axios'
 
 const Datatable = (props) => {
-  // const [data, setData] = useState(userRows)
   const [data, setData] = useState([])
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id))
-  }
+  // const handleDelete = (id) => {
+  //   setData(data.filter((item) => item.id !== id))
+  // }
 
   const fetchData = async () => {
     await axios
@@ -53,12 +52,6 @@ const Datatable = (props) => {
   return (
     <>
       <div className="datatable">
-        {/* <div className="datatableTitle">
-        Add New User
-        <Link to="/users/new" className="link">
-          Add New
-        </Link>
-      </div> */}
         <Box sx={{ display: 'flex', pb: '16px' }}>
           <Box sx={{ width: '4px', height: '24px', background: '#0D28A6', mr: '8px' }}></Box>
           <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
