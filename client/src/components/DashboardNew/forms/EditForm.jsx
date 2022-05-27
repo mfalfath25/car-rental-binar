@@ -83,7 +83,7 @@ const EditForm = (props) => {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
       {message.type ? (
         <Alert
           severity={message.type}

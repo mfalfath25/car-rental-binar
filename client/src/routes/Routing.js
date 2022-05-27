@@ -6,7 +6,6 @@ import SearchPage from '../pages/SearchPage'
 import DetailPage from '../pages/DetailPage'
 import PaymentPage from '../pages/PaymentPage'
 import RegisterPage from '../pages/RegisterPage'
-// import DashboardPage from '../pages/DashboardPage'
 import Home from '../pages/dashboard/home/Home'
 import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
@@ -17,6 +16,7 @@ export const Data = createContext()
 
 const Routing = () => {
   const [user, setUser] = useState(null)
+  const [cars, setCars] = useState([])
 
   const getUser = async () => {
     try {
@@ -37,8 +37,19 @@ const Routing = () => {
     }
   }
 
+  const getCar = async () => {
+    try {
+      await axios.get('http://localhost:5000/car/').then((res) => {
+        setCars(res.data)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     getUser()
+    getCar()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -46,14 +57,13 @@ const Routing = () => {
 
   return (
     <BrowserRouter>
-      <Data.Provider value={{ user }}>
+      <Data.Provider value={{ user, cars }}>
         <Routes>
           <Route path="/login" element={user ? <Navigate to={'/main'} /> : <LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/protected" element={<Protected saveUser={(user) => setUser(user)} />} />
           {user ? (
             <>
-              {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
               <Route path="/dashboard" element={<Home />} />
               <Route path="/dashboard/cars" element={<Cars />} />
               <Route path="/dashboard/cars/edit/:id" element={<Cars />} />
