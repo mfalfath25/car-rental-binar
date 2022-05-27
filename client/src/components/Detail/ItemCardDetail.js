@@ -25,7 +25,7 @@ const ItemCardDetail = () => {
       <Grid item sx={{ mb: '4rem' }}>
         <Card variant="outlined" sx={{ maxWidth: '333px' }}>
           <Box sx={{ m: '20px' }}>
-            <CardContent sx={{ p: '0px' }}>
+            <CardContent sx={{ p: 0 }}>
               <img
                 src={`/uploads/${data.image}`}
                 alt="card-img"

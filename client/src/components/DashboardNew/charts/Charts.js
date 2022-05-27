@@ -29,6 +29,7 @@ ChartJS.register(
 
 const Charts = () => {
   const { cars } = useContext(Data)
+  console.log('cars', cars)
 
   const transformCarsType = (arr) => {
     let temp = []

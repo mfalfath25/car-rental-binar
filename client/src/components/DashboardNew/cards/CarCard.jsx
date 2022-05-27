@@ -7,6 +7,7 @@ import { toRupiah } from '../../../utils/toRupiah'
 import { formatDate } from '../../../utils/formatDate'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory'
 
 const style = {
   position: 'absolute',
@@ -40,6 +41,7 @@ const CarCard = (props) => {
 
   return (
     <>
+      {/* {props.car.filter((item) => props.car.type.includes(props.search))} */}
       <Card variant="outlined" sx={{ maxWidth: 350, minWidth: 285, maxHeight: 480 }}>
         <CardContent>
           <img

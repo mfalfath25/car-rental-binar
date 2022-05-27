@@ -19,6 +19,7 @@ const Cars = () => {
   const { pathname } = location
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const [cars, setCars] = useState([])
+  const [filter, setFilter] = useState('')
   const [message, setMessage] = useState({
     info: '',
     type: '',
@@ -76,6 +77,12 @@ const Cars = () => {
       })
   }
 
+  const handleFilter = (e) => {
+    e.preventDefault()
+    const { value } = e.target
+    setFilter(value)
+  }
+
   useEffect(() => {
     handlePath(pathname)
     fetchData()
@@ -109,10 +116,18 @@ const Cars = () => {
             <Stack direction="row" padding={2} sx={{ justifyContent: 'space-between' }}>
               <Stack>
                 <ButtonGroup variant="outlined" aria-label="outlined button group">
-                  <Button>All</Button>
-                  <Button>Small</Button>
-                  <Button>Medium</Button>
-                  <Button>Large</Button>
+                  <Button onClick={handleFilter} value={''}>
+                    All
+                  </Button>
+                  <Button onClick={handleFilter} value={'small'}>
+                    Small
+                  </Button>
+                  <Button onClick={handleFilter} value={'medium'}>
+                    Medium
+                  </Button>
+                  <Button onClick={handleFilter} value={'large'}>
+                    Large
+                  </Button>
                 </ButtonGroup>
               </Stack>
               <Button
@@ -128,11 +143,13 @@ const Cars = () => {
             </Stack>
             <Box padding={2}>
               <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
-                {cars?.map((cars, id) => (
-                  <Grid item xs={6} lg={4} xl={3} key={id}>
-                    <CarCard car={cars} setCars={setCars} alertMessage={message} />
-                  </Grid>
-                ))}
+                {cars
+                  ?.filter((car) => car.type.includes(filter))
+                  .map((cars, id) => (
+                    <Grid item xs={6} lg={4} xl={3} key={id}>
+                      <CarCard car={cars} setCars={setCars} alertMessage={message} />
+                    </Grid>
+                  ))}
               </Grid>
             </Box>
           </>
