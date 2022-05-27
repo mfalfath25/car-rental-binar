@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Accordion,
   AccordionDetails,
@@ -12,12 +12,22 @@ import {
   Grid,
   Stack,
   Typography,
-} from '@mui/material';
-import { FiUsers, FiSettings, FiCalendar, FiChevronDown } from 'react-icons/fi';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+} from '@mui/material'
+import { FiUsers, FiSettings, FiCalendar, FiChevronDown } from 'react-icons/fi'
+import axios from 'axios'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchItem } from '../../redux/actions/itemActions'
 
 const PaymentDetail = () => {
+  const navigate = useNavigate()
+  const data = useSelector((state) => state.selectedItem)
+  const dispatch = useDispatch()
+  const { id } = useParams()
+
+  useEffect(() => {
+    if (id !== '') dispatch(fetchItem(id))
+  })
   // const [data, setData] = useState([]);
   // const { id } = useParams();
   // const baseUrl = `https://rent-cars-api.herokuapp.com/admin/car/${id}`;
@@ -105,16 +115,12 @@ const PaymentDetail = () => {
                   sx={{ p: '0' }}
                 >
                   <Typography sx={{ fontSize: '16px' }}>Total</Typography>
-                  <Typography
-                    sx={{ fontSize: '16px', fontWeight: 'bold', ml: 'auto' }}
-                  >
+                  <Typography sx={{ fontSize: '16px', fontWeight: 'bold', ml: 'auto' }}>
                     Rp. {Number(1000000).toLocaleString()}
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ p: '0' }}>
-                  <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
-                    Harga
-                  </Typography>
+                  <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>Harga</Typography>
                   <Box sx={{ pl: '8px', ml: '14px', mb: 2 }}>
                     <ul className="info-list">
                       <Stack direction="row">
@@ -180,9 +186,7 @@ const PaymentDetail = () => {
                   <Divider variant="middle" />
 
                   <Stack direction="row">
-                    <Typography
-                      sx={{ fontSize: '16px', fontWeight: 'bold', mt: 2 }}
-                    >
+                    <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mt: 2 }}>
                       Total
                     </Typography>
                     <Typography
@@ -205,6 +209,7 @@ const PaymentDetail = () => {
                 size="large"
                 variant="contained"
                 sx={{ fontWeight: 'bold', background: '#5CB85F' }}
+                onClick={() => navigate(`/main/pembayaran/invoice/${id}`)}
               >
                 Bayar
               </Button>
@@ -213,7 +218,7 @@ const PaymentDetail = () => {
         </Card>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default PaymentDetail;
+export default PaymentDetail

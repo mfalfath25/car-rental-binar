@@ -7,10 +7,10 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
+  BarElement,
   Title,
 } from 'chart.js'
-import { Doughnut, Line } from 'react-chartjs-2'
+import { Doughnut, Bar } from 'react-chartjs-2'
 import { Box, Stack } from '@mui/material'
 import { Data } from '../../../routes/Routing'
 
@@ -21,7 +21,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -131,7 +131,7 @@ const Charts = () => {
 
           <Box sx={{ width: '400px', height: '200px' }}>
             <p>Price Range</p>
-            <Line options={options} data={data3} />
+            <Bar options={options} data={data3} />
           </Box>
         </Stack>
       </Box>

@@ -32,7 +32,6 @@ const CarCard = (props) => {
   const handleDelete = () => {
     axios.delete(`http://localhost:5000/car/delete/${props.car._id}`).then((res) => {
       console.log(res)
-      props.deletes(true)
       props.setCars((items) => items.filter((item) => item._id !== props.car._id))
       handleClose()
       // window.location.reload()
@@ -41,7 +40,6 @@ const CarCard = (props) => {
 
   return (
     <>
-      {/* {props.car.filter((item) => props.car.type.includes(props.search))} */}
       <Card variant="outlined" sx={{ maxWidth: 350, minWidth: 285, maxHeight: 480 }}>
         <CardContent>
           <img
@@ -143,7 +141,6 @@ const CarCard = (props) => {
                 <Button
                   variant="contained"
                   size="large"
-                  // type="submit"
                   onClick={handleDelete}
                   disableElevation
                   sx={{ textTransform: 'none', fontWeight: 'bold' }}

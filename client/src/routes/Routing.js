@@ -11,6 +11,7 @@ import Protected from '../pages/Protected'
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import Cars from '../pages/dashboard/cars/Cars'
+import InvoicePage from '../pages/InvoicePage'
 
 export const Data = createContext()
 
@@ -72,6 +73,7 @@ const Routing = () => {
               <Route path="/main/search" element={<SearchPage />} />
               <Route path="/main/search/detail/:id" element={<DetailPage />} />
               <Route path="/main/pembayaran/:id" element={<PaymentPage />} />
+              <Route path="/main/pembayaran/invoice/:id" element={<InvoicePage />} />
               <Route
                 path="*"
                 element={
