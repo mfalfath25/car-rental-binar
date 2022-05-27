@@ -1,53 +1,13 @@
 import './datatable.scss'
 import { DataGrid } from '@mui/x-data-grid'
 import { userColumns } from '../../../apis/dashboard/dummydata'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Box } from '@mui/system'
 import { Typography } from '@mui/material'
-import axios from 'axios'
+import { Data } from '../../../routes/Routing'
 
 const Datatable = (props) => {
-  const [data, setData] = useState([])
-
-  // const handleDelete = (id) => {
-  //   setData(data.filter((item) => item.id !== id))
-  // }
-
-  const fetchData = async () => {
-    await axios
-      .get('http://localhost:5000/car')
-      .then((res) => {
-        setData(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  // const actionColumn = [
-  //   {
-  //     field: 'action',
-  //     headerName: 'Action',
-  //     headerClassName: 'style-header',
-  //     width: 140,
-  //     renderCell: (params) => {
-  //       return (
-  //         <div className="cellAction">
-  //           <Link to="/users/test" style={{ textDecoration: 'none' }}>
-  //             <div className="viewButton">View</div>
-  //           </Link>
-  //           <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
-  //             Delete
-  //           </div>
-  //         </div>
-  //       )
-  //     },
-  //   },
-  // ]
+  const { cars } = useContext(Data)
 
   return (
     <>
@@ -60,7 +20,7 @@ const Datatable = (props) => {
         </Box>
         <Box
           sx={{
-            height: '106%',
+            height: '90%',
             width: 1,
             '.style-header': {
               backgroundColor: '#CFD4ED',
@@ -69,14 +29,12 @@ const Datatable = (props) => {
         >
           <DataGrid
             className="datagrid"
-            rows={data}
+            rows={cars}
             columns={userColumns}
             getRowId={(row) => row._id}
-            // columns={userColumns.concat(actionColumn)}
-            pageSize={10}
+            pageSize={8}
             rowsPerPageOptions={[10]}
             sx={{ fontWeight: 'bold' }}
-            // checkboxSelection
           />
         </Box>
       </div>

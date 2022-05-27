@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  Paper,
-  Typography,
-  Select,
-  MenuItem,
-} from '@mui/material'
-// import { DesktopDatePicker, LocalizationProvider } from '@mui/lab'
-// import AdapterDateFns from '@mui/lab/AdapterDateFns'
-// import { FiUsers } from 'react-icons/fi'
-// import axios from 'axios'
+import { Box, Button, FormControl, Grid, Paper, Typography, Select, MenuItem } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchItems } from '../../redux/actions/itemActions'
@@ -25,7 +12,7 @@ const SearchFilter = (props) => {
   const location = useLocation()
   const [tipeMobil, setTipeMobil] = useState('')
   const [ukuranMobil, setUkuranMobil] = useState('')
-  const [tahunMobil, setTahunMobil] = useState('')
+  const [modelMobil, setModelMobil] = useState('')
   const [jumlahPenumpang, setJumlahPenumpang] = useState('')
 
   useEffect(() => {
@@ -33,7 +20,7 @@ const SearchFilter = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const searchData = { tipeMobil, ukuranMobil, tahunMobil, jumlahPenumpang }
+  const searchData = { tipeMobil, ukuranMobil, modelMobil, jumlahPenumpang }
 
   const getSearchPage = (props) => {
     const path = `search`
@@ -114,8 +101,8 @@ const SearchFilter = (props) => {
                   <FormControl fullWidth>
                     <Select
                       disabled={props.disabled}
-                      value={tahunMobil}
-                      onChange={(e) => setTahunMobil(e.target.value)}
+                      value={modelMobil}
+                      onChange={(e) => setModelMobil(e.target.value)}
                       displayEmpty
                       inputProps={{ 'aria-label': 'Without label' }}
                       size="small"

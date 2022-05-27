@@ -19,8 +19,6 @@ const Cars = () => {
   const { pathname } = location
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const [cars, setCars] = useState([])
-  const [count, setCount] = useState(0)
-  const [deleted, setDeleted] = useState(false)
   const [message, setMessage] = useState({
     info: '',
     type: '',
@@ -81,16 +79,12 @@ const Cars = () => {
   useEffect(() => {
     handlePath(pathname)
     fetchData()
-    // setMessage({ info: 'Hai', type: 'success' })
-    // console.log(cars)
   }, [pathname])
 
-  // deleted === true? fetchData() : null
   // console.log('PATH now: ', pathname)
   // console.log('PATH :id: ', id)
   // console.log(pathname)
   // console.log(cars)
-  // console.log('Deleted?', deleted)
 
   return (
     <div className="cars">
@@ -136,12 +130,7 @@ const Cars = () => {
               <Grid container rowSpacing={4} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
                 {cars?.map((cars, id) => (
                   <Grid item xs={6} lg={4} xl={3} key={id}>
-                    <CarCard
-                      car={cars}
-                      setCars={setCars}
-                      alertMessage={message}
-                      deletes={(deleted) => setDeleted(deleted)}
-                    />
+                    <CarCard car={cars} setCars={setCars} alertMessage={message} />
                   </Grid>
                 ))}
               </Grid>

@@ -116,8 +116,8 @@ const Charts = () => {
 
   return (
     <>
-      <Box padding={'8px 16px'}>
-        <Stack direction={'row'} width={'100%'}>
+      <Box px={'16px'} pb={'24px'} flex={true}>
+        <Stack direction={'row'}>
           <Box sx={{ width: '400px', height: '200px' }}>
             <p>Type Range</p>
             <Doughnut width={'50%'} options={{ maintainAspectRatio: false }} data={data1} />

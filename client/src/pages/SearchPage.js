@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { Box, Grid } from '@mui/material';
-import ContentXl from '../components/Layout/ContentXl';
-import Navbar from '../components/Layout/Navbar';
-import ItemCard from '../components/Search/ItemCard';
-import Footer from '../components/Layout/Footer';
-import ContentLg from '../components/Layout/ContentLg';
-import SearchFilter from '../components/Layout/SearchFilter';
+import React, { useState } from 'react'
+import { Box, Grid } from '@mui/material'
+import ContentXl from '../components/Layout/ContentXl'
+import Navbar from '../components/Layout/Navbar'
+import ItemCard from '../components/Search/ItemCard'
+import Footer from '../components/Layout/Footer'
+import ContentLg from '../components/Layout/ContentLg'
+import SearchFilter from '../components/Layout/SearchFilter'
 
 const SearchPage = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('')
   const searchs = {
     tipeMobil: '',
     ukuranMobil: '',
-    tahunMobil: '',
+    modelMobil: '',
     jumlahPenumpang: '',
-  };
+  }
 
   // console.log('filtering langsung', search);
 
@@ -48,7 +48,7 @@ const SearchPage = () => {
         <Footer />
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default SearchPage;
+export default SearchPage

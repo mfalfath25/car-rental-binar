@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setButton, fetchItems } from '../../redux/actions/itemActions'
 import { getYear } from '../../utils/getYear'
+import { formatDate } from '../../utils/formatDate'
 
 const ItemCard = (props) => {
   const bt = useSelector((state) => state.buttonText.buttonText)
@@ -31,6 +32,7 @@ const ItemCard = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log(data)
   const handleCard = (id) => {
     const path = `detail/${id}`
     navigate(path)
@@ -44,11 +46,11 @@ const ItemCard = (props) => {
             (item) =>
               item.name.includes(props.search.tipeMobil) &&
               item.type.includes(props.search.ukuranMobil) &&
-              item.time.includes(props.search.tahunMobil) &&
+              item.model.includes(props.search.modelMobil) &&
               item.passenger.includes(props.search.jumlahPenumpang)
           )
           .map((item) => (
-            <Grid item xs={4} key={item.id}>
+            <Grid item xs={4} key={item._id}>
               <Card
                 variant="outlined"
                 sx={{
@@ -66,14 +68,16 @@ const ItemCard = (props) => {
                   }}
                 >
                   <CardContent sx={{ p: '8px' }}>
-                    <img className="card-img" src={item.image} alt="card-img" />
+                    <img
+                      src={`/uploads/${item.image}`}
+                      alt="card-img"
+                      style={{ width: '100%', maxHeight: 240 }}
+                    />
                     <Typography variant="body1">
                       {item.name} / {item.type}
                     </Typography>
 
-                    <Typography
-                      sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}
-                    >
+                    <Typography sx={{ fontSize: '18px', fontWeight: 'bold', my: 1 }}>
                       Rp. {Number(item.price).toLocaleString()} / hari
                     </Typography>
                     <Typography variant="body1" sx={{ mb: 1 }}>
@@ -112,7 +116,7 @@ const ItemCard = (props) => {
                     >
                       <FiCalendar />
                       <Typography variant="body1" sx={{ ml: 1 }}>
-                        Tahun {getYear(item.time)}
+                        {formatDate(item.startRent)} - {formatDate(item.finishRent)}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -125,7 +129,7 @@ const ItemCard = (props) => {
                         fontWeight: 'bold',
                         background: '#5CB85F',
                       }}
-                      onClick={() => handleCard(item.id)}
+                      onClick={() => handleCard(item._id)}
                     >
                       {bt}
                     </Button>

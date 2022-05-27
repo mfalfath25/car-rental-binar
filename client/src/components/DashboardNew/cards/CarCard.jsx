@@ -44,7 +44,7 @@ const CarCard = (props) => {
         <CardContent>
           <img
             src={`/uploads/${props.car.image}`}
-            alt=""
+            alt="card-img"
             style={{ width: '100%', maxHeight: 240 }}
           />
           <Typography sx={{ fontWeight: 'bold', fontSize: 14, padding: '8px 0' }}>

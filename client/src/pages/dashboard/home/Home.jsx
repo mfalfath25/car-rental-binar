@@ -5,6 +5,7 @@ import Navbar from '../../../components/DashboardNew/navbar/Navbar'
 import Breadcrumb from '../../../components/DashboardNew/breadcrumb/Breadcrumb'
 import Datatable from '../../../components/DashboardNew/datatable/Datatable'
 import Charts from '../../../components/DashboardNew/charts/Charts'
+import { Box, Stack } from '@mui/material'
 
 const Home = () => {
   const breadcrumbs = [
@@ -27,8 +28,10 @@ const Home = () => {
       <div className="homeContainer">
         <Navbar />
         <Breadcrumb breadcrumbs={breadcrumbs} title={'Dashboard'} />
-        <Charts />
-        <Datatable />
+        <Stack direction={'column'}>
+          <Charts />
+          <Datatable />
+        </Stack>
       </div>
     </div>
   )

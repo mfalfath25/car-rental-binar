@@ -5,14 +5,6 @@ export const userColumns = [
     headerName: 'Name',
     headerClassName: 'style-header',
     width: 196,
-    // renderCell: (params) => {
-    //   return (
-    //     <div className="cellWithImg">
-    //       <img className="cellImg" src={params.row.img} alt="avatar" />
-    //       {params.row.username}
-    //     </div>
-    //   )
-    // },
   },
   {
     field: 'type',
@@ -62,12 +54,4 @@ export const userColumns = [
     headerClassName: 'style-header',
     width: 235,
   },
-  // {
-  //   field: 'status',
-  //   headerName: 'Status',
-  //   width: 160,
-  //   renderCell: (params) => {
-  //     return <div className={`cellWithStatus ${params.row.status}`}>{params.row.status}</div>
-  //   },
-  // },
 ]
