@@ -1,5 +1,6 @@
 import React from 'react'
-import { Breadcrumbs, Typography, Link, Box } from '@mui/material'
+import { Breadcrumbs, Typography, Box } from '@mui/material'
+import { Link } from 'react-router-dom'
 import { FiChevronRight } from 'react-icons/fi'
 
 const Breadcrumb = (props) => {
@@ -10,7 +11,12 @@ const Breadcrumb = (props) => {
           <Breadcrumbs separator={<FiChevronRight />} aria-label="breadcrumb">
             {props.breadcrumbs.map((item) => {
               return (
-                <Link underline="hover" key={item.key} color="inherit" href={item.link}>
+                <Link
+                  underline="hover"
+                  key={item.key}
+                  to={item.link}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
                   {item.name}
                 </Link>
               )

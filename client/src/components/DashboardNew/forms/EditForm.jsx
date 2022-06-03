@@ -83,7 +83,7 @@ const EditForm = (props) => {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
       {message.type ? (
         <Alert
           severity={message.type}
@@ -101,8 +101,9 @@ const EditForm = (props) => {
             Nama
           </Typography>
           <TextField
+            required
+            value={car.name}
             onChange={handleChange}
-            placeholder={car.name}
             name="name"
             variant="outlined"
             size="small"
@@ -114,10 +115,10 @@ const EditForm = (props) => {
             Tipe
           </Typography>
           <Select
-            size="small"
             value={car.type}
-            name="type"
             onChange={handleChange}
+            name="type"
+            size="small"
             sx={{ minWidth: '140px' }}
           >
             <MenuItem value={'small'}>Small</MenuItem>
@@ -128,10 +129,10 @@ const EditForm = (props) => {
             Model
           </Typography>
           <Select
-            size="small"
             value={car.model}
-            name="model"
             onChange={handleChange}
+            name="model"
+            size="small"
             sx={{ minWidth: '140px' }}
           >
             <MenuItem value={'manual'}>Manual</MenuItem>
@@ -143,11 +144,11 @@ const EditForm = (props) => {
             Penumpang
           </Typography>
           <TextField
-            placeholder={Number(car.passenger) || 0}
+            value={Number(car.passenger) || 0}
             onChange={handleChange}
             name="passenger"
-            variant="outlined"
             type="number"
+            variant="outlined"
             size="small"
             sx={{ minWidth: '400px' }}
           />
@@ -157,11 +158,11 @@ const EditForm = (props) => {
             Harga
           </Typography>
           <TextField
-            placeholder={Number(car.price) || 0}
+            value={Number(car.price) || 0}
             onChange={handleChange}
             name="price"
-            variant="outlined"
             type="number"
+            variant="outlined"
             size="small"
             sx={{ minWidth: '400px' }}
           />
@@ -172,7 +173,7 @@ const EditForm = (props) => {
           </Typography>
           <TextField
             multiline
-            placeholder={car.description}
+            value={car.description}
             onChange={handleChange}
             name="description"
             variant="outlined"
@@ -189,9 +190,9 @@ const EditForm = (props) => {
               // placeholder={car.image} // not working lol
               required
               onChange={handleFile}
+              name="image"
               type="file"
               filename="image"
-              name="image"
             />
             <FormHelperText id="component-helper-text">File size max. 2MB</FormHelperText>
           </div>
@@ -201,10 +202,9 @@ const EditForm = (props) => {
             Start Rent
           </Typography>
           <input
-            value={moment(car.startRent).format('YYYY-MM-DD')}
             required
+            value={car.startRent === '' ? '' : moment(car.startRent).format('YYYY-MM-DD')}
             onChange={handleChange}
-            data-date-format="yyyy-mm-dd"
             type="date"
             name="startRent"
             id="date"
@@ -215,10 +215,9 @@ const EditForm = (props) => {
             Finish Rent
           </Typography>
           <input
-            value={moment(car.finishRent).format('YYYY-MM-DD')}
             required
+            value={car.finishRent === '' ? '' : moment(car.finishRent).format('YYYY-MM-DD')}
             onChange={handleChange}
-            data-date-format="yyyy-mm-dd"
             type="date"
             name="finishRent"
             id="date"

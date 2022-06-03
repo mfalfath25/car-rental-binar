@@ -5,14 +5,6 @@ export const userColumns = [
     headerName: 'Name',
     headerClassName: 'style-header',
     width: 196,
-    // renderCell: (params) => {
-    //   return (
-    //     <div className="cellWithImg">
-    //       <img className="cellImg" src={params.row.img} alt="avatar" />
-    //       {params.row.username}
-    //     </div>
-    //   )
-    // },
   },
   {
     field: 'type',
@@ -61,97 +53,5 @@ export const userColumns = [
     headerName: 'Updated At',
     headerClassName: 'style-header',
     width: 235,
-  },
-  // {
-  //   field: 'status',
-  //   headerName: 'Status',
-  //   width: 160,
-  //   renderCell: (params) => {
-  //     return <div className={`cellWithStatus ${params.row.status}`}>{params.row.status}</div>
-  //   },
-  // },
-]
-
-//temporary data
-export const userRows = [
-  {
-    id: 1,
-    name: 'SnowASD',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 2,
-    name: 'Jamie Lannister',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 3,
-    name: 'Lannister',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 4,
-    name: 'Stark',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 5,
-    name: 'Targaryen',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 6,
-    name: 'Melisandre',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 7,
-    name: 'Clifford',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
-  },
-  {
-    id: 8,
-    name: 'Frances',
-    category: 'small',
-    price: '10000',
-    startRent: '-',
-    finishRent: '-',
-    createdAt: '-',
-    updatedAt: '-',
   },
 ]

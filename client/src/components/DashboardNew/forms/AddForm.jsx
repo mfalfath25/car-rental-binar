@@ -46,6 +46,7 @@ const AddForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target
     setCar({ ...car, [name]: value })
+    console.log(car)
   }
 
   const handleSubmit = (e) => {
@@ -66,7 +67,7 @@ const AddForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data">
+    <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
       {message.type ? (
         <Alert
           severity={message.type}

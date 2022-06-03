@@ -20,7 +20,7 @@ const Protected = (props) => {
         if (res.data.user.role === 'user') {
           navigate('/main')
         } else if (res.data.user.role === 'admin') {
-          navigate('/dashboard')
+          navigate('/dashboard/cars')
         }
       })
       .catch((err) => {
@@ -41,7 +41,13 @@ const Protected = (props) => {
   }, [])
   return (
     <>
-      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
         <Typography variant="h5" sx={{ mb: 3 }}>
           Authenticating...
         </Typography>

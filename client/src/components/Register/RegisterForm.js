@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { FormControl, OutlinedInput, Button, Typography, Alert, CircularProgress, Box, FormControlLabel, Checkbox, Link, Stack } from '@mui/material'
-import { FcGoogle } from 'react-icons/fc'
-import { FaGithub } from 'react-icons/fa'
+import {
+  FormControl,
+  OutlinedInput,
+  Button,
+  Typography,
+  Alert,
+  CircularProgress,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Stack,
+} from '@mui/material'
+// import { FcGoogle } from 'react-icons/fc'
+// import { FaGithub } from 'react-icons/fa'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -85,7 +97,15 @@ const RegisterForm = () => {
           <Typography variant="h6" sx={{ pt: 2 }}>
             Password
           </Typography>
-          <OutlinedInput id="pass-input" type="password" name="password" placeholder="6+ Karakter" size="small" onChange={handleChange} required={true} />
+          <OutlinedInput
+            id="pass-input"
+            type="password"
+            name="password"
+            placeholder="6+ Karakter"
+            size="small"
+            onChange={handleChange}
+            required={true}
+          />
         </FormControl>
         <FormControl fullWidth>
           <FormControlLabel

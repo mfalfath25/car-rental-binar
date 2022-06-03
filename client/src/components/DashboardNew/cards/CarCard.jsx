@@ -7,6 +7,7 @@ import { toRupiah } from '../../../utils/toRupiah'
 import { formatDate } from '../../../utils/formatDate'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory'
 
 const style = {
   position: 'absolute',
@@ -31,7 +32,7 @@ const CarCard = (props) => {
   const handleDelete = () => {
     axios.delete(`http://localhost:5000/car/delete/${props.car._id}`).then((res) => {
       console.log(res)
-      props.deletes(true)
+      props.setCars((items) => items.filter((item) => item._id !== props.car._id))
       handleClose()
       // window.location.reload()
     })
@@ -43,7 +44,7 @@ const CarCard = (props) => {
         <CardContent>
           <img
             src={`/uploads/${props.car.image}`}
-            alt=""
+            alt="card-img"
             style={{ width: '100%', maxHeight: 240 }}
           />
           <Typography sx={{ fontWeight: 'bold', fontSize: 14, padding: '8px 0' }}>
@@ -79,9 +80,6 @@ const CarCard = (props) => {
                 color="error"
                 sx={{ color: '#FA2C5A', textTransform: 'none', fontWeight: 'bold' }}
                 onClick={handleOpen}
-                // onClick={() => {
-                //   navigate('/cars/add-new')
-                // }}
               >
                 Delete
               </Button>
@@ -143,7 +141,6 @@ const CarCard = (props) => {
                 <Button
                   variant="contained"
                   size="large"
-                  // type="submit"
                   onClick={handleDelete}
                   disableElevation
                   sx={{ textTransform: 'none', fontWeight: 'bold' }}
